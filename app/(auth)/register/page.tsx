@@ -9,7 +9,7 @@ const Register = async () => {
   }
   return (
     <div className="min-h-screen flex justify-center items-center font-alpino">
-      <div className="bg-light p-12 rounded-xl">
+      <div className="p-12 rounded-xl border border-secondary">
         <h1 className="text-4xl font-bold mb-8 text-center">Sign up</h1>
         <SignIn />
       </div>

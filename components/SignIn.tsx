@@ -19,7 +19,7 @@ const SignIn = () => {
           src="/google-logo.svg"
           alt="google logo"
         />
-        Signup with Google
+        Sign up with Google
       </button>
     </form>
   );
