@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #321cbb;
+  --color-secondary: #8787fe;
+  --color-light: #d5d9ff;
+  --font-alpino: "Alpino", sans-serif;
+}
