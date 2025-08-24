@@ -1,7 +1,7 @@
 import { signIn } from "@/auth";
 import Image from "next/image";
 
-const SignIn = () => {
+export const SignIn = () => {
   return (
     <form
       action={async () => {
@@ -24,5 +24,3 @@ const SignIn = () => {
     </form>
   );
 };
-
-export default SignIn;

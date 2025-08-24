@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
-import SignIn from "@/components/SignIn";
+import { SignIn } from "@/components/SignIn";
 import { redirect } from "next/navigation";
 
-const Register = async () => {
+export const Register = async () => {
   const session = await auth();
   if (session) {
     redirect("/");
@@ -16,5 +16,3 @@ const Register = async () => {
     </div>
   );
 };
-
-export default Register;

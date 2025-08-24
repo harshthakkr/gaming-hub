@@ -13,7 +13,7 @@ const SignOut = () => {
         await signOut({ redirect: false });
         router.push("/register");
       }}
-      className="border border-secondary px-3 py-1 rounded-lg"
+      className="rounded-lg cursor-pointer"
     >
       Sign out
     </button>

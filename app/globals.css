@@ -5,6 +5,8 @@
 @theme {
   --color-primary: #321cbb;
   --color-secondary: #8787fe;
+  --color-accent: #544aff;
+  --color-accent-light: #bdc7ff;
   --color-light: #d5d9ff;
   --font-alpino: "Alpino", sans-serif;
 }
