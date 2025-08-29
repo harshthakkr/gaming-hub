@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  post          Post[]
+  comment       Comment[]
+  accounts      Account[]
+  sessions      Session[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Post {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  title     String
+  body      String?
+  tag       String
+  upvote    Int       @default(0)
+  downvote  Int       @default(0)
+  comment   Comment[]
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  text      String
+  upvote    Int      @default(0)
+  downvote  Int      @default(0)
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+}
