@@ -1,17 +1,23 @@
-import { Calendar } from "./Calendar";
+"use client";
+
 import { Topic } from "./Topic";
 
-export const Sidebar = () => {
+interface SidebarProps {
+  activeView: string;
+  setActiveView: (view: string) => void;
+}
+
+export const Sidebar = ({ activeView, setActiveView }: SidebarProps) => {
   return (
     <div className="min-w-72">
-      <Calendar title="Calendar" />
-      <Topic title="2025" />
-      <Topic title="Upcoming Games" />
-      <Topic title="News" />
-      <Topic title="Platforms" />
-      <Topic title="Genre" />
-      <Topic title="Creators" />
-      <Topic title="Developers" />
+      <Topic title="All games" setActiveView={setActiveView} />
+      <Topic title="2025" setActiveView={setActiveView} />
+      <Topic title="Upcoming Games" setActiveView={setActiveView} />
+      <Topic title="News" setActiveView={setActiveView} />
+      <Topic title="Platforms" setActiveView={setActiveView} />
+      <Topic title="Genre" setActiveView={setActiveView} />
+      <Topic title="Creators" setActiveView={setActiveView} />
+      <Topic title="Developers" setActiveView={setActiveView} />
     </div>
   );
 };
