@@ -22,7 +22,6 @@ export const AllGames = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get("/api/games");
-        console.log(res.data);
         setGames(res.data);
       } catch (error) {
         console.error("Error fetching games:", error);
@@ -35,11 +34,12 @@ export const AllGames = () => {
     return;
   }
   return (
-    <div>
+    <div className="grid grid-cols-4 gap-6">
       {games.map((game) => (
         <GameCard
           key={game.id}
           title={game.name}
+          id={game.id}
           image={
             game.coverData
               ? `https:${game.coverData.url.replace("t_thumb", "t_cover_big")}`

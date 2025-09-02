@@ -9,7 +9,6 @@ export const Topic = ({ title, setActiveView }: TopicProps) => {
       <button
         onClick={() => {
           setActiveView(title);
-          console.log(title);
         }}
         className="w-full text-left px-3 py-2 text-xl font-medium rounded-lg hover:bg-accent-light hover:dark:bg-accent cursor-pointer"
       >

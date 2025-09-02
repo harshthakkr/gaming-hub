@@ -14,7 +14,7 @@ interface Cover {
   url: string;
 }
 
-export async function GET() {
+export const GET = async () => {
   try {
     const gamesRes = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/games`,
@@ -28,7 +28,6 @@ export async function GET() {
     );
 
     const games: Game[] = gamesRes.data;
-    console.log("Games:", games);
 
     const coverIds = games
       .filter((game: Game) => game.cover)
@@ -65,4 +64,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+};
