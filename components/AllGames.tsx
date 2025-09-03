@@ -7,10 +7,7 @@ import { GameCard } from "./GameCard";
 interface GameProps {
   id: number;
   name: string;
-  cover: number;
-  coverData: {
-    id: number;
-    image_id: string;
+  cover: {
     url: string;
   };
   releaseDates: number[];
@@ -22,7 +19,7 @@ export const AllGames = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get("/api/games");
-        setGames(res.data);
+        setGames(res.data.data);
       } catch (error) {
         console.error("Error fetching games:", error);
       }
@@ -40,11 +37,7 @@ export const AllGames = () => {
           key={game.id}
           title={game.name}
           id={game.id}
-          image={
-            game.coverData
-              ? `https:${game.coverData.url.replace("t_thumb", "t_cover_big")}`
-              : "/placeholder.jpg"
-          }
+          image={`https:${game.cover.url.replace("t_thumb", "t_cover_big")}`}
         />
       ))}
     </div>
