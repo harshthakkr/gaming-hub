@@ -7,6 +7,7 @@ import { GameCard } from "./GameCard";
 interface GameProps {
   id: number;
   name: string;
+  slug: string;
   cover: {
     url: string;
   };
@@ -28,7 +29,7 @@ export const AllGames = () => {
   }, []);
 
   if (!games) {
-    return;
+    return <div>No games available</div>;
   }
   return (
     <div className="grid grid-cols-4 gap-6">
@@ -36,6 +37,7 @@ export const AllGames = () => {
         <GameCard
           key={game.id}
           title={game.name}
+          slug={game.slug}
           id={game.id}
           image={`https:${game.cover.url.replace("t_thumb", "t_cover_big")}`}
         />

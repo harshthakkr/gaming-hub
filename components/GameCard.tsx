@@ -1,17 +1,18 @@
-import axios from "axios";
+"use client";
+
 import { Heart } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface GameCardProps {
-  id: number;
   title: string;
+  slug: string;
+  id: number;
   image: string;
 }
 
-export const GameCard = ({ id, title, image }: GameCardProps) => {
-  const handleClick = async (id: number) => {
-    const game = await axios.get(`/api/game/${id}`);
-  };
+export const GameCard = ({ title, slug, id, image }: GameCardProps) => {
+  console.log(id, slug);
   return (
     <div className="relative rounded-xl bg-neutral-300 dark:bg-neutral-800 hover:scale-104 duration-200 ease-in-out">
       <div className="flex justify-center items-center">
@@ -24,11 +25,13 @@ export const GameCard = ({ id, title, image }: GameCardProps) => {
         />
       </div>
       <div className="p-4 flex items-start">
-        <h3
-          onClick={() => handleClick(id)}
-          className="font-semibold text-2xl line-clamp-2 leading-tight cursor-pointer"
-        >
-          {title}
+        <h3>
+          <Link
+            href={{ pathname: `/games/${slug}`, query: { id } }}
+            className="font-semibold text-2xl line-clamp-2 leading-tight cursor-pointer"
+          >
+            {title}
+          </Link>
         </h3>
         <Heart className="absolute bottom-4 right-4 cursor-pointer" />
       </div>
