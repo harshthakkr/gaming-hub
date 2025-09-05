@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link
-          href="https://api.fontshare.com/v2/css?f[]=alpino@100,300,400,500,700,900,1&display=swap"
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700,1&f[]=supreme@100,101,200,201,300,301,400,401,500,501,700,701,800,801,1,2&display=swap"
           rel="stylesheet"
         />
       </head>

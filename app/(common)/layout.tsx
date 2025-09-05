@@ -7,7 +7,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="mx-8 my-4 font-alpino">
+    <div className="mx-8 my-4 font-clash">
       <Navbar />
       <div className="flex gap-8">
         <Sidebar />

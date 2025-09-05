@@ -8,5 +8,33 @@
   --color-accent: #544aff;
   --color-accent-light: #bdc7ff;
   --color-light: #d5d9ff;
-  --font-alpino: "Alpino", sans-serif;
+  --font-clash: "Clash Display", sans-serif;
+  --font-supreme: "Supreme", sans-serif;
+}
+
+/* Infinite scroll animations for game covers */
+@keyframes scroll-up-infinite {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes scroll-down-infinite {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-scroll-up-slow {
+  animation: scroll-up-infinite 25s linear infinite;
+}
+
+.animate-scroll-down-medium {
+  animation: scroll-down-infinite 20s linear infinite;
 }
