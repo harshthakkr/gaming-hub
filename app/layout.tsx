@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { Sidebar } from "@/components/Sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,13 +36,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider defaultTheme="system" attribute="class">
-          <div className="mx-8 my-4 font-alpino">
-            <Navbar />
-            <div className="flex gap-8">
-              <Sidebar />
-              {children}
-            </div>
-          </div>
+          {children}
         </ThemeProvider>
       </body>
     </html>
