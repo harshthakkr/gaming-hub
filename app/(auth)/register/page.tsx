@@ -7,7 +7,7 @@ import { Suspense } from "react";
 const Register = async () => {
   const session = await auth();
   if (session) {
-    redirect("/");
+    redirect("/games");
   }
 
   return (

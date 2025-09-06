@@ -12,7 +12,6 @@ interface GameCardProps {
 }
 
 export const GameCard = ({ title, slug, id, image }: GameCardProps) => {
-  console.log(id, slug);
   return (
     <div className="relative rounded-xl bg-neutral-300 dark:bg-neutral-800 hover:scale-104 duration-200 ease-in-out">
       <div className="flex justify-center items-center">
@@ -20,8 +19,9 @@ export const GameCard = ({ title, slug, id, image }: GameCardProps) => {
           width={260}
           height={320}
           src={image}
-          alt="Game cover image"
+          alt={`${title} cover image`}
           className="rounded-t-xl object-cover"
+          priority
         />
       </div>
       <div className="p-4 flex items-start">

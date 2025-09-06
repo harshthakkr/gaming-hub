@@ -13,7 +13,7 @@ export const GET = async (
 
   const gameRes = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_URL}/games`,
-    `fields name,summary,storyline,websites.url,videos.video_id,involved_companies.company.name,genres.name,dlcs,expansions,aggregated_rating,screenshots.url,screenshots.height,screenshots.width,cover.url,release_dates.human,similar_games.name; where id = ${id};`,
+    `fields name,summary,storyline,websites.url,videos.video_id,involved_companies.developer,involved_companies.publisher,involved_companies.company.name,age_ratings.rating_category,genres.name,dlcs,expansions,aggregated_rating,screenshots.url,screenshots.height,screenshots.width,cover.url,release_dates.human,platforms.name,similar_games.name,similar_games.cover.url,similar_games.slug; where id = ${id};`,
     { headers }
   );
   const res = gameRes.data[0];

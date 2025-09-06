@@ -1,20 +1,12 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
-
-interface Game {
-  id: number;
-  name: string;
-  cover: {
-    url: string;
-  };
-  release_dates: number[];
-}
+import { GameCardProps } from "@/utils/types";
 
 export const GET = async () => {
   try {
     const gamesRes = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/games`,
-      "fields name,slug,cover.url,release_dates;",
+      "fields name,slug,cover.url;",
       {
         headers: {
           "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,
@@ -22,7 +14,8 @@ export const GET = async () => {
         },
       }
     );
-    return NextResponse.json({ data: gamesRes.data });
+    const data = gamesRes.data;
+    return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch games" },

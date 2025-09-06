@@ -2,24 +2,21 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { GamePageProps } from "@/utils/types";
+import { AllGames } from "@/components/AllGames";
+import { GameDataRow } from "@/components/GameDataRow";
+import { GameMultiDataRow } from "@/components/GameMultiDataRow";
 
-interface GameProps {
-  name: string;
-  cover: { url: string };
-  genres: { name: string }[];
-  involved_companies: { company: string }[];
-  release_dates: { human: string };
-  screenshots: { url: string; height: number; width: number }[];
-  summary: string;
-  storyline?: string;
-  videos: { video_id: string }[];
-}
-
-export const GameClient = ({ data }: { data: GameProps }) => {
+export const GameClient = ({ data }: { data: GamePageProps }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = data.screenshots || [];
   const current = images[currentIndex];
+  const developerData = data.involved_companies
+    ?.filter((company) => company.developer || company.publisher)
+    .map((company) => ({
+      name: company.company.name,
+    }));
 
   if (!current) return <div>No images available</div>;
 
@@ -29,7 +26,7 @@ export const GameClient = ({ data }: { data: GameProps }) => {
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-900 shadow-2xl group">
+          <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-900 shadow-2xl group mb-8">
             <Image
               src={`https:${current.url.replace("t_thumb", "t_1080p")}`}
               alt={`${data.name} screenshot`}
@@ -38,7 +35,6 @@ export const GameClient = ({ data }: { data: GameProps }) => {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
               priority
             />
-
             {images.length > 1 && (
               <>
                 <button
@@ -91,16 +87,51 @@ export const GameClient = ({ data }: { data: GameProps }) => {
               </>
             )}
           </div>
+          <div className="font-supreme bg-gray-900/50 border border-gray-700 rounded-2xl p-6 space-y-6">
+            <GameDataRow
+              title="Release Date"
+              data={data.release_dates ? data.release_dates[0].human : "N/A"}
+            />
+            <GameMultiDataRow
+              title="Platforms"
+              data={data.platforms}
+              colors="bg-primary/30 text-neutral-200"
+            />
+            <GameDataRow
+              title="Critics Score"
+              data={
+                data.aggregated_rating
+                  ? `${data.aggregated_rating.toFixed(0)}/100`
+                  : "N/A"
+              }
+            />
+            <GameMultiDataRow
+              title="Genres"
+              data={data.genres}
+              colors="bg-secondary/20 text-secondary "
+            />
+            <GameMultiDataRow
+              title="Developers"
+              data={developerData}
+              colors="bg-gray-800 text-gray-200 "
+            />
+          </div>
         </div>
 
         <div className="space-y-6">
-          <h2 className="text-2xl font-semibold mb-4 text-white">About</h2>
+          <h3 className="text-2xl font-semibold mb-2 text-white">About</h3>
           {data.summary && (
-            <p className="text-lg text-gray-300 leading-relaxed">
+            <p className="font-supreme text-gray-300 leading-relaxed">
               {data.summary}
             </p>
           )}
         </div>
+      </div>
+      <div>
+        <h3 className="text-3xl text-center font-semibold mt-12 mb-8">
+          More Games like {data.name}
+        </h3>
+        <AllGames games={data.similar_games} />
       </div>
     </div>
   );
