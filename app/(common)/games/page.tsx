@@ -1,11 +1,11 @@
 "use client";
 
-import { AllGames } from "@/components/AllGames";
+import { Games } from "@/components/Games";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { GameCardProps } from "@/utils/types";
 
-export const Games = () => {
+export const AllGames = () => {
   const [games, setGames] = useState<GameCardProps[]>([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +19,7 @@ export const Games = () => {
     fetchData();
   }, []);
 
-  return <AllGames games={games} />;
+  return <Games games={games} />;
 };
 
 export default Games;

@@ -4,15 +4,15 @@ import { Topic } from "./Topic";
 
 export const Sidebar = () => {
   return (
-    <div className="min-w-64">
-      <Topic title="All games" />
-      <Topic title="2025" />
-      <Topic title="Upcoming Games" />
-      <Topic title="News" />
-      <Topic title="Platforms" />
-      <Topic title="Genre" />
-      <Topic title="Creators" />
-      <Topic title="Developers" />
+    <div className="font-supreme min-w-58">
+      <Topic title="All Games" path="/games" />
+      <Topic title="2025" path="/2025" />
+      <Topic title="Upcoming Games" path="/upcoming-games" />
+      <Topic title="Gaming Events" path="/event" />
+      <Topic title="Platforms" path="/platforms" />
+      <Topic title="Genres" path="/genres" />
+      <Topic title="Creators" path="/creators" />
+      <Topic title="Developers" path="/developers" />
     </div>
   );
 };

@@ -14,7 +14,7 @@ export const GET = async () => {
         },
       }
     );
-    const data = gamesRes.data;
+    const data: GameCardProps = gamesRes.data;
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(

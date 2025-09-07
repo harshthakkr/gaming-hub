@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { GamePageProps } from "@/utils/types";
-import { AllGames } from "@/components/AllGames";
+import { Games } from "@/components/Games";
 import { GameDataRow } from "@/components/GameDataRow";
 import { GameMultiDataRow } from "@/components/GameMultiDataRow";
 
@@ -131,7 +131,7 @@ export const GameClient = ({ data }: { data: GamePageProps }) => {
         <h3 className="text-3xl text-center font-semibold mt-12 mb-8">
           More Games like {data.name}
         </h3>
-        <AllGames games={data.similar_games} />
+        <Games games={data.similar_games} />
       </div>
     </div>
   );

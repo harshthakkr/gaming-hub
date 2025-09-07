@@ -31,4 +31,13 @@ export interface GameCardProps {
   cover: {
     url: string;
   };
+  platforms: {
+    name: string;
+  };
+}
+
+export interface PlatformProps {
+  id: number;
+  name: string;
+  slug: string;
 }

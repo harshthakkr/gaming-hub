@@ -1,7 +1,7 @@
 import { GameCardProps } from "@/utils/types";
 import { GameCard } from "./GameCard";
 
-export const AllGames = ({ games }: { games: GameCardProps[] }) => {
+export const Games = ({ games }: { games: GameCardProps[] }) => {
   if (!games) {
     return <div>No games available</div>;
   }
