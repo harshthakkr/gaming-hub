@@ -4,7 +4,6 @@ import Link from "next/link";
 
 const Platforms = async () => {
   const platforms = await axios.get("http://localhost:3000/api/platforms");
-  console.log(platforms.data);
   return (
     <div>
       <h2 className="text-4xl font-semibold mb-4">Platforms</h2>

@@ -18,7 +18,7 @@ export const GameClient = ({ data }: { data: GamePageProps }) => {
       name: company.company.name,
     }));
 
-  if (!current) return <div>No images available</div>;
+  if (!current) return <div>No data available for this game : (</div>;
 
   return (
     <div className="max-w-7xl mx-auto px-4">

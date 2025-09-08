@@ -15,7 +15,6 @@ const Platform = () => {
     const fetchData = async () => {
       const res = await axios.get(`/api/platforms/${slug}`);
       setData(res.data);
-      console.log(res.data);
     };
 
     if (slug) {

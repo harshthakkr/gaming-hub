@@ -1,15 +1,11 @@
 import axios from "axios";
 import { GameClient } from "./GameClient";
-import { GameCardProps } from "@/utils/types";
+import { GamePageProps } from "@/utils/types";
 
-const Game = async ({
-  searchParams,
-}: {
-  searchParams: Promise<{ id?: string }>;
-}) => {
-  const { id } = await searchParams;
-  const { data }: { data: GameCardProps } = await axios.get(
-    `http://localhost:3000/api/game/${id}`
+const Game = async ({ params }: { params: Promise<{ slug?: string }> }) => {
+  const { slug } = await params;
+  const { data }: { data: GamePageProps } = await axios.get(
+    `http://localhost:3000/api/games/${slug}`
   );
 
   return <GameClient data={data} />;

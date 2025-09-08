@@ -28,10 +28,10 @@ export interface GameCardProps {
   id: number;
   name: string;
   slug: string;
-  cover: {
+  cover?: {
     url: string;
   };
-  platforms: {
+  platforms?: {
     name: string;
   };
 }

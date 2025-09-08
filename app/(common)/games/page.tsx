@@ -22,4 +22,4 @@ export const AllGames = () => {
   return <Games games={games} />;
 };
 
-export default Games;
+export default AllGames;

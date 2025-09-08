@@ -6,7 +6,7 @@ export const GET = async () => {
   try {
     const gamesRes = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/games`,
-      "fields name,slug,cover.url;",
+      "fields name,slug,cover.url; limit 20;",
       {
         headers: {
           "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,

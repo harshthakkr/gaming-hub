@@ -10,10 +10,10 @@ export const Games = ({ games }: { games: GameCardProps[] }) => {
       {games.map((game) => (
         <GameCard
           key={game.id}
-          title={game.name}
+          name={game.name}
           slug={game.slug}
           id={game.id}
-          image={`https:${game.cover.url.replace("t_thumb", "t_1080p")}`}
+          cover={game.cover}
         />
       ))}
     </div>
