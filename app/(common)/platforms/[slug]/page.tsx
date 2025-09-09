@@ -1,6 +1,7 @@
 "use client";
 
 import { Games } from "@/components/Games";
+import { Heading } from "@/components/Heading";
 import { GameCardProps } from "@/utils/types";
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -32,7 +33,7 @@ const Platform = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-4">{slug}</h2>
+      <Heading title={slug} />
       {games && (
         <Games games={games} handlePagination={handlePagination} displayMore />
       )}

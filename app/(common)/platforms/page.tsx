@@ -5,6 +5,7 @@ import { PlatformProps } from "@/utils/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
+import { Heading } from "@/components/Heading";
 
 const Platforms = () => {
   const [platforms, setPlatforms] = useState<PlatformProps[]>([]);
@@ -25,7 +26,7 @@ const Platforms = () => {
 
   return (
     <div>
-      <h2 className="text-4xl font-semibold mb-4">Platforms</h2>
+      <Heading title="Platforms" />
       <div className="grid grid-cols-4 gap-4">
         {platforms.map((platform: PlatformProps) => {
           return (
