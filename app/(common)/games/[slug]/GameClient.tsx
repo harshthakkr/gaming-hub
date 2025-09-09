@@ -127,12 +127,14 @@ export const GameClient = ({ data }: { data: GamePageProps }) => {
           )}
         </div>
       </div>
-      <div>
-        <h3 className="text-3xl text-center font-semibold mt-12 mb-8">
-          More Games like {data.name}
-        </h3>
-        <Games games={data.similar_games} />
-      </div>
+      {data.similar_games && (
+        <div>
+          <h3 className="text-3xl text-center font-semibold mt-12 mb-8">
+            More Games like {data.name}
+          </h3>
+          <Games games={data.similar_games} />
+        </div>
+      )}
     </div>
   );
 };

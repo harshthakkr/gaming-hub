@@ -19,7 +19,23 @@ export const AllGames = () => {
     fetchData();
   }, []);
 
-  return <Games games={games} />;
+  const handlePagination = async () => {
+    const res = await axios.get(
+      `http://localhost:3000/api/games?offset=${games.length}`
+    );
+    console.log(res.data);
+    if (setGames) {
+      setGames([...games, ...res.data]);
+    }
+  };
+
+  return (
+    <Games
+      games={games}
+      handlePagination={handlePagination}
+      displayMore
+    />
+  );
 };
 
 export default AllGames;

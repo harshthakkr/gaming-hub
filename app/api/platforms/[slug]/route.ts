@@ -6,9 +6,12 @@ export const GET = async (
   { params }: { params: Promise<{ slug: string }> }
 ) => {
   const { slug } = await params;
+  const offset = request.nextUrl.searchParams?.get("offset");
   const platformRes = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_URL}/games`,
-    `fields name,slug,cover.url,platforms.name; where platforms.slug = "${slug}"; limit 20;`,
+    `fields name,slug,cover.url,platforms.name; where platforms.slug = "${slug}"; limit 40; offset ${
+      offset || 0
+    };`,
     {
       headers: {
         "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,

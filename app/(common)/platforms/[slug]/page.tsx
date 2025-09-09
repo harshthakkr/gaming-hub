@@ -9,12 +9,12 @@ import { useEffect, useState } from "react";
 const Platform = () => {
   const params = useParams();
   const slug = params.slug;
-  const [data, setData] = useState<GameCardProps[] | null>(null);
+  const [games, setGames] = useState<GameCardProps[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(`/api/platforms/${slug}`);
-      setData(res.data);
+      setGames(res.data);
     };
 
     if (slug) {
@@ -22,10 +22,20 @@ const Platform = () => {
     }
   }, [slug]);
 
+  const handlePagination = async () => {
+    const res = await axios.get(
+      `/api/platforms/${slug}?offset=${games.length}`
+    );
+    setGames([...games, ...res.data]);
+    console.log(games);
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4">{slug}</h2>
-      {data && <Games games={data} />}
+      {games && (
+        <Games games={games} handlePagination={handlePagination} displayMore />
+      )}
     </div>
   );
 };
