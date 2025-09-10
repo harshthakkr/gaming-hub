@@ -8,26 +8,27 @@ import { Heading } from "@/components/Heading";
 import { Card } from "@/components/Card";
 
 const Platforms = () => {
-  const [platforms, setPlatforms] = useState<CardProps[]>([]);
+  const [genres, setGenres] = useState<CardProps[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
+
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get("/api/platforms");
-      setPlatforms(res.data);
+      const res = await axios.get("/api/genres");
+      setGenres(res.data);
     };
     fetchData();
   }, []);
 
   const handlePagination = async () => {
-    const res = await axios.get(`/api/platforms?offset=${platforms.length}`);
-    setPlatforms([...platforms, ...res.data]);
+    const res = await axios.get(`/api/genres?offset=${genres.length}`);
+    setGenres([...genres, ...res.data]);
     setHasMore(res.data.length === 20);
   };
 
   return (
     <div>
-      <Heading title="Platforms" />
-      <Card items={platforms} route="platforms" />
+      <Heading title="Genres" />
+      <Card items={genres} route="genres" />
       <div className="flex justify-center">
         {hasMore && <LoadMoreButton handleClick={handlePagination} />}
       </div>

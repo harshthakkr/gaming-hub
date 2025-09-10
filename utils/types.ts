@@ -33,7 +33,7 @@ export interface GameCardProps {
   };
 }
 
-export interface PlatformProps {
+export interface CardProps {
   id: number;
   name: string;
   slug: string;

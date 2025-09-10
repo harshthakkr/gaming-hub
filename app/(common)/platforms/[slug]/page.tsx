@@ -11,11 +11,13 @@ const Platform = () => {
   const params = useParams();
   const slug = params.slug;
   const [games, setGames] = useState<GameCardProps[]>([]);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(`/api/platforms/${slug}`);
       setGames(res.data);
+      setHasMore(res.data.length === 40);
     };
 
     if (slug) {
@@ -28,14 +30,18 @@ const Platform = () => {
       `/api/platforms/${slug}?offset=${games.length}`
     );
     setGames([...games, ...res.data]);
-    console.log(games);
+    setHasMore(res.data.length === 40);
   };
 
   return (
     <div>
       <Heading title={slug} />
       {games && (
-        <Games games={games} handlePagination={handlePagination} displayMore />
+        <Games
+          games={games}
+          handlePagination={handlePagination}
+          displayMore={hasMore}
+        />
       )}
     </div>
   );

@@ -7,11 +7,14 @@ import { GameCardProps } from "@/utils/types";
 
 export const AllGames = () => {
   const [games, setGames] = useState<GameCardProps[]>([]);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get("/api/games");
         setGames(res.data);
+        setHasMore(res.data.length === 40);
       } catch (error) {
         console.error("Error fetching games:", error);
       }
@@ -23,18 +26,14 @@ export const AllGames = () => {
     const res = await axios.get(
       `http://localhost:3000/api/games?offset=${games.length}`
     );
-    console.log(res.data);
     if (setGames) {
       setGames([...games, ...res.data]);
+      setHasMore(res.data.length === 40);
     }
   };
 
   return (
-    <Games
-      games={games}
-      handlePagination={handlePagination}
-      displayMore
-    />
+    <Games games={games} handlePagination={handlePagination} displayMore />
   );
 };
 
