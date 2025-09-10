@@ -9,11 +9,12 @@ import { Card } from "@/components/Card";
 
 const Platforms = () => {
   const [platforms, setPlatforms] = useState<CardProps[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(false);
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get("/api/platforms");
       setPlatforms(res.data);
+      setHasMore(res.data.length === 20);
     };
     fetchData();
   }, []);

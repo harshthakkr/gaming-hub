@@ -8,10 +8,13 @@ import { useEffect, useState } from "react";
 
 const Year2025 = () => {
   const [games, setGames] = useState<GameCardProps[]>([]);
+  const [hasMore, setHasMore] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get("/api/2025");
       setGames(res.data);
+      setHasMore(res.data.length === 40);
     };
     fetchData();
   }, []);
@@ -19,12 +22,17 @@ const Year2025 = () => {
   const handlePagination = async () => {
     const res = await axios.get(`/api/2025?offset=${games.length}`);
     setGames([...games, ...res.data]);
+    setHasMore(res.data.length === 40);
   };
 
   return (
     <div>
       <Heading title="2025" />
-      <Games games={games} handlePagination={handlePagination} displayMore />
+      <Games
+        games={games}
+        handlePagination={handlePagination}
+        displayMore={hasMore}
+      />
     </div>
   );
 };

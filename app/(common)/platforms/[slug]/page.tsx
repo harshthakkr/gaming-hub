@@ -11,7 +11,7 @@ const Platform = () => {
   const params = useParams();
   const slug = params.slug;
   const [games, setGames] = useState<GameCardProps[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -7,7 +7,7 @@ import { GameCardProps } from "@/utils/types";
 
 export const AllGames = () => {
   const [games, setGames] = useState<GameCardProps[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +33,7 @@ export const AllGames = () => {
   };
 
   return (
-    <Games games={games} handlePagination={handlePagination} displayMore />
+    <Games games={games} handlePagination={handlePagination} displayMore={hasMore} />
   );
 };
 
