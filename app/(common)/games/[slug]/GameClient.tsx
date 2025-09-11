@@ -122,7 +122,7 @@ export const GameClient = ({ data }: { data: GamePageProps }) => {
         <div className="space-y-6">
           <h3 className="text-2xl font-semibold mb-2 text-white">About</h3>
           {data.summary && (
-            <p className="font-supreme text-gray-300 leading-relaxed">
+            <p className="font-supreme text-neutral-400 leading-relaxed">
               {data.summary}
             </p>
           )}
