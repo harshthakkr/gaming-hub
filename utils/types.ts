@@ -38,3 +38,14 @@ export interface CardProps {
   name: string;
   slug: string;
 }
+
+export interface DeveloperPageProps {
+  id?: number;
+  name?: string;
+  description?: string;
+  developed?: GameCardProps[];
+  websites?: {
+    id: number;
+    url: string;
+  }[];
+}

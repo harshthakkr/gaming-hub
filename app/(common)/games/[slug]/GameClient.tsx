@@ -6,6 +6,7 @@ import { GamePageProps } from "@/utils/types";
 import { Games } from "@/components/Games";
 import { GameDataRow } from "@/components/GameDataRow";
 import { GameMultiDataRow } from "@/components/GameMultiDataRow";
+import { SecondaryHeading } from "@/components/SecondaryHeading";
 
 export const GameClient = ({ data }: { data: GamePageProps }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -129,9 +130,7 @@ export const GameClient = ({ data }: { data: GamePageProps }) => {
       </div>
       {data.similar_games && (
         <div>
-          <h3 className="text-3xl text-center font-semibold mt-12 mb-8">
-            More Games like {data.name}
-          </h3>
+          <SecondaryHeading title={`More Games like ${data.name}`} />
           <Games games={data.similar_games} />
         </div>
       )}
