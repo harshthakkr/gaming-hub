@@ -11,7 +11,6 @@ export const Sidebar = () => {
       <Topic title="Gaming Events" path="/event" />
       <Topic title="Platforms" path="/platforms" />
       <Topic title="Genres" path="/genres" />
-      <Topic title="Creators" path="/creators" />
       <Topic title="Developers" path="/developers" />
     </div>
   );

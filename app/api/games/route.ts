@@ -7,7 +7,9 @@ export const GET = async (request: NextRequest) => {
   try {
     const gamesRes = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/games`,
-      `fields name,slug,cover.url; limit 40; offset ${offset || 0};`,
+      `fields name,slug,cover.url; sort aggregated_rating desc; limit 40; offset ${
+        offset || 0
+      };`,
       {
         headers: {
           "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,
