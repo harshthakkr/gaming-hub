@@ -22,7 +22,6 @@ export const Games = ({
             key={game.id}
             name={game.name}
             slug={game.slug}
-            id={game.id}
             cover={game.cover}
           />
         ))}

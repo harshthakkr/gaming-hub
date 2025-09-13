@@ -25,7 +25,7 @@ export interface GamePageProps {
 }
 
 export interface GameCardProps {
-  id: number;
+  id?: number;
   name: string;
   slug: string;
   cover?: {
@@ -48,4 +48,13 @@ export interface DeveloperPageProps {
     id: number;
     url: string;
   }[];
+}
+
+export interface EventCardProps {
+  id: number;
+  slug: string;
+  name: string;
+  event_logo?: {
+    url: string;
+  };
 }
