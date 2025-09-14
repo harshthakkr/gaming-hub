@@ -1,10 +1,14 @@
 import axios from "axios";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async () => {
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
+) => {
+  const { slug } = await params;
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_URL}/events`,
-    `fields name,slug,description,start_time,end_time,event_logo.url,event_networks.url,games.name,live_stream_url,videos.name,videos.video_id; sort start_time desc; limit 20;`,
+    `fields name,description,start_time,end_time,event_logo.url,games.name,games.slug,games.cover.url,live_stream_url; where slug = "${slug}";`,
     {
       headers: {
         "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,
@@ -13,5 +17,5 @@ export const GET = async () => {
     }
   );
   const events = res.data;
-  return NextResponse.json(events);
+  return NextResponse.json(events[0]);
 };

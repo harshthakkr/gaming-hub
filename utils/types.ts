@@ -58,3 +58,16 @@ export interface EventCardProps {
     url: string;
   };
 }
+
+export interface EventPageProps {
+  id?: number;
+  name?: string;
+  description?: string;
+  start_time?: number;
+  end_time?: number;
+  event_logo?: {
+    url: string;
+  };
+  games?: GameCardProps[];
+  live_stream_url?: string;
+}
