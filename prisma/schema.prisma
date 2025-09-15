@@ -9,18 +9,28 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  createdAt     DateTime  @default(now())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  post          Post[]
-  comment       Comment[]
-  accounts      Account[]
-  sessions      Session[]
+  id              String    @id @default(cuid())
+  createdAt       DateTime  @default(now())
+  name            String?
+  email           String    @unique
+  emailVerified   DateTime?
+  image           String?
+  wishlistedGames Game[]
+  post            Post[]
+  comment         Comment[]
+  accounts        Account[]
+  sessions        Session[]
 
   @@map("users")
+}
+
+model Game {
+  id       Int     @id
+  name     String
+  slug     String
+  coverUrl String
+  User     User?   @relation(fields: [userId], references: [id])
+  userId   String?
 }
 
 model Account {

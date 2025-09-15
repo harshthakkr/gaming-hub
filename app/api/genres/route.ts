@@ -1,11 +1,10 @@
 import axios from "axios";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export const GET = async (request: NextRequest) => {
-  const offset = request.nextUrl.searchParams?.get("offset");
+export const GET = async () => {
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_URL}/genres`,
-    `fields name,slug; limit 20; offset ${offset || 0};`,
+    `fields name,slug; limit 40;`,
     {
       headers: {
         "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,
