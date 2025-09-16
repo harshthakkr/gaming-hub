@@ -29,7 +29,9 @@ export const GameCard = ({ name, slug, cover }: GameCardProps) => {
             {name}
           </Link>
         </p>
-        <Heart className="absolute bottom-4 right-4 cursor-pointer" />
+        <button className="absolute bottom-4 right-4 cursor-pointer">
+          <Heart />
+        </button>
       </div>
     </div>
   ) : (
