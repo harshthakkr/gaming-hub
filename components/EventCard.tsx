@@ -20,11 +20,11 @@ export const EventCard = ({ name, slug, event_logo }: EventCardProps) => {
           />
         )}
       </div>
-      <div className="p-4 flex items-start">
+      <div className="p-3 flex items-start">
         <p>
           <Link
             href={`/events/${slug}`}
-            className="font-semibold text-2xl line-clamp-2 leading-tight cursor-pointer"
+            className="font-medium text-lg xl:text-xl line-clamp-3 leading-tight cursor-pointer"
           >
             {name}
           </Link>

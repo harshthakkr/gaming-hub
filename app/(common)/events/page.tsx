@@ -29,7 +29,7 @@ const Events = () => {
     <div>
       <Heading title="Events" />
       <div className="flex flex-col justify-center items-center">
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
           {events.map((event) => {
             return (
               <EventCard

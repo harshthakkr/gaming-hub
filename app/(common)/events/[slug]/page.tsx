@@ -32,36 +32,41 @@ const Event = () => {
     <div>
       <Heading title={event.name} />
       {event.event_logo && (
-        <div className="flex justify-between items-start mb-6 gap-6">
-          <Image
-            src={`https:${event.event_logo.url.replace("t_thumb", "t_1080p")}`}
-            alt={`${event.name || "Event"} logo`}
-            width={400}
-            height={200}
-            className="rounded-lg object-contain"
-            priority
-          />
-          <div className="space-y-4">
-            <p className="text-gray-400">
-              Start: {formatDate(event.start_time)}
-            </p>
-            <p className="text-gray-400">End: {formatDate(event.end_time)}</p>
+        <div className="flex items-start">
+          <div className="flex flex-col xl:flex-row justify-between items-start mb-6 gap-6">
+            <Image
+              src={`https:${event.event_logo.url.replace(
+                "t_thumb",
+                "t_1080p"
+              )}`}
+              alt={`${event.name || "Event"} logo`}
+              width={400}
+              height={200}
+              className="rounded-lg object-contain"
+              priority
+            />
+            <div className="space-y-4">
+              <p className="text-gray-400">
+                Start: {formatDate(event.start_time)}
+              </p>
+              <p className="text-gray-400">End: {formatDate(event.end_time)}</p>
 
-            {event.live_stream_url && (
-              <div>
-                <Link
-                  href={event.live_stream_url}
-                  target="_blank"
-                  className="text-blue-400 hover:underline"
-                >
-                  Watch Live →
-                </Link>
-              </div>
-            )}
+              {event.live_stream_url && (
+                <div>
+                  <Link
+                    href={event.live_stream_url}
+                    target="_blank"
+                    className="text-blue-400 hover:underline"
+                  >
+                    Watch Live →
+                  </Link>
+                </div>
+              )}
 
-            {event.description && (
-              <p className="text-gray-300">{event.description}</p>
-            )}
+              {event.description && (
+                <p className="text-gray-300">{event.description}</p>
+              )}
+            </div>
           </div>
         </div>
       )}
