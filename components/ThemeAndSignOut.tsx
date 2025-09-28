@@ -11,7 +11,7 @@ export const ThemeAndSignOut = () => {
     setMounted(true);
   }, []);
   return (
-    <div className="flex flex-row-reverse md:flex-row items-center justify-between md:gap-4 lg:gap-6 flex-shrink-0">
+    <div className="flex flex-row-reverse lg:flex-row items-center justify-between lg:gap-4 xl:gap-6 flex-shrink-0">
       {mounted && (
         <button
           onClick={() =>

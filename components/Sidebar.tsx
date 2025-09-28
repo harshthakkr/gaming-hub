@@ -12,9 +12,9 @@ export const Sidebar = ({
   setIsOpen: (isOpen: boolean) => void;
 }) => {
   return (
-    <div className="h-full min-w-32 mx-8 md:mx-0 flex flex-col">
+    <div className="h-full min-w-32 mx-5 lg:mx-0 flex flex-col">
       <div className="flex-1">
-        <button className="cursor-pointer my-4 md:hidden">
+        <button className="cursor-pointer my-4 lg:hidden">
           <X onClick={() => setIsOpen(!isOpen)} />
         </button>
         <Topic title="All Games" path="/games" />
@@ -25,7 +25,7 @@ export const Sidebar = ({
         <Topic title="Genres" path="/genres" />
         <Topic title="Developers" path="/developers" />
       </div>
-      <div className="block md:hidden px-3 mb-4">
+      <div className="block lg:hidden px-3 mb-4">
         <ThemeAndSignOut />
       </div>
     </div>

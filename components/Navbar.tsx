@@ -11,8 +11,8 @@ export const Navbar = ({
   setIsOpen: (isOpen: boolean) => void;
 }) => {
   return (
-    <nav className="relative md:flex md:justify-between md:items-center mb-6">
-      <div className="md:hidden absolute">
+    <nav className="relative lg:flex lg:justify-between lg:items-center mb-6">
+      <div className="lg:hidden absolute">
         <button onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
           {isOpen ? <X /> : <Menu />}
         </button>
@@ -21,9 +21,9 @@ export const Navbar = ({
       <input
         type="text"
         placeholder="Search games..."
-        className="hidden md:block flex-1 max-w-lg mx-6 px-4 py-2 border border-neutral-700 outline-accent rounded"
+        className="hidden lg:block flex-1 max-w-lg mx-6 px-4 py-2 border border-neutral-700 outline-accent rounded"
       />
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <ThemeAndSignOut />
       </div>
     </nav>

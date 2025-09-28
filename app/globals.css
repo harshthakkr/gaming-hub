@@ -10,9 +10,11 @@
   --color-light: #d5d9ff;
   --font-clash: "Clash Display", sans-serif;
   --font-supreme: "Supreme", sans-serif;
+  --breakpoint-md: 586px;
+  --breakpoint-lg: 800px;
+  --breakpoint-xl: 1080px;
 }
 
-/* Infinite scroll animations for game covers */
 @keyframes scroll-up-infinite {
   0% {
     transform: translateY(0);

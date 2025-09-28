@@ -20,11 +20,11 @@ export const GameCard = ({ name, slug, cover }: GameCardProps) => {
           />
         )}
       </div>
-      <div className="p-4 flex items-start">
+      <div className="p-3 lg:p-4">
         <p>
           <Link
             href={`/games/${slug}`}
-            className="font-semibold text-2xl line-clamp-2 leading-tight cursor-pointer"
+            className="font-medium lg:font-semibold text-lg lg:text-2xl line-clamp-3 leading-tight cursor-pointer"
           >
             {name}
           </Link>

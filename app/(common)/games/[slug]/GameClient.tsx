@@ -22,10 +22,11 @@ export const GameClient = ({ data }: { data: GamePageProps }) => {
   if (!current) return <div>No data available for this game : (</div>;
 
   return (
-    <div className="max-w-7xl mx-auto px-4">
-      <h1 className="text-6xl font-semibold mb-12">{data.name}</h1>
-
-      <div className="grid lg:grid-cols-3 gap-8">
+    <div className="max-w-7xl mx-auto">
+      <h1 className="text-2xl md:text-3xl xl:text-4xl font-semibold mb-6">
+        {data.name}
+      </h1>
+      <div className="grid xl:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-900 shadow-2xl group mb-8">
             <Image
@@ -120,7 +121,7 @@ export const GameClient = ({ data }: { data: GamePageProps }) => {
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-2xl font-semibold mb-2 text-white">About</h3>
+          <h3 className="text-xl font-semibold mb-2 text-white">About</h3>
           {data.summary && (
             <p className="font-supreme text-neutral-400 leading-relaxed">
               {data.summary}
