@@ -8,12 +8,14 @@ interface TopicProps {
 export const Topic = ({ title, path }: TopicProps) => {
   return (
     <div className="mb-2">
-      <button
-        onClick={() => {}}
-        className="w-full text-left px-3 py-2 md:text-lg lg:text-xl rounded-lg hover:bg-accent-light hover:dark:bg-accent cursor-pointer"
-      >
-        <Link href={path}>{title}</Link>
-      </button>
+      <Link href={path}>
+        <button
+          onClick={() => {}}
+          className="w-full text-left px-3 py-2 md:text-lg lg:text-xl rounded-lg hover:bg-accent-light hover:dark:bg-accent cursor-pointer"
+        >
+          {title}
+        </button>
+      </Link>
     </div>
   );
 };

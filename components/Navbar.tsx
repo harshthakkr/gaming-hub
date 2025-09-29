@@ -11,7 +11,7 @@ export const Navbar = ({
   setIsOpen: (isOpen: boolean) => void;
 }) => {
   return (
-    <nav className="relative lg:flex lg:justify-between lg:items-center mb-6">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 px-5 py-4 lg:px-8 lg:flex lg:justify-between lg:items-center">
       <div className="lg:hidden absolute">
         <button onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
           {isOpen ? <X /> : <Menu />}

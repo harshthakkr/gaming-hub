@@ -14,9 +14,6 @@ export const Sidebar = ({
   return (
     <div className="h-full min-w-32 mx-5 lg:mx-0 flex flex-col">
       <div className="flex-1">
-        <button className="cursor-pointer my-4 lg:hidden">
-          <X onClick={() => setIsOpen(!isOpen)} />
-        </button>
         <Topic title="All Games" path="/games" />
         <Topic title="2025" path="/2025" />
         <Topic title="Upcoming Games" path="/upcoming-games" />
