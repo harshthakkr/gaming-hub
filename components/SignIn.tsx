@@ -11,7 +11,7 @@ export const SignIn = () => {
     >
       <button
         type="submit"
-        className="font-supreme cursor-pointer flex justify-center mx-auto items-center gap-4 text-white text-lg bg-primary px-8 py-4 rounded-xl"
+        className="font-supreme cursor-pointer flex justify-center mx-auto items-center gap-4 text-white text-lg bg-primary px-6 py-3 md:px-8 md:py-4 rounded-xl"
       >
         <Image
           width="20"

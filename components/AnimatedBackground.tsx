@@ -22,14 +22,14 @@ const AnimatedColumn = memo(
           {covers.map((cover, index) => (
             <div
               key={`set1-${cover}-${index}`}
-              className="relative rounded-xl overflow-hidden shadow-2xl w-[200px] h-[266px] flex-shrink-0"
+              className="relative rounded-xl overflow-hidden shadow-2xl w-[160px] h-[213px] xl:w-[180px] xl:h-[240px] flex-shrink-0"
             >
               <Image
                 src={`/covers/${cover}`}
                 alt="Game Cover"
                 fill
                 className="object-contain"
-                sizes="200px"
+                sizes="(max-width: 1024px) 160px, (max-width: 1280px) 180px, 220px"
                 quality={90}
                 priority={index < 2}
               />
@@ -39,14 +39,13 @@ const AnimatedColumn = memo(
           {covers.map((cover, index) => (
             <div
               key={`set2-${cover}-${index}`}
-              className="relative rounded-xl overflow-hidden shadow-2xl w-[200px] h-[266px] flex-shrink-0"
+              className="relative rounded-xl overflow-hidden shadow-2xl w-[160px] h-[213px] xl:w-[180px] xl:h-[240px] flex-shrink-0"
             >
               <Image
                 src={`/covers/${cover}`}
                 alt="Game Cover"
                 fill
                 className="object-contain"
-                sizes="200px"
                 quality={90}
                 loading="lazy"
                 placeholder="blur"
@@ -94,22 +93,22 @@ export const AnimatedBackground = memo(() => {
   ];
 
   return (
-    <div className="absolute inset-0 flex justify-center items-start overflow-hidden gap-8">
-      <div className="w-52">
+    <div className="hidden absolute inset-0 xl:flex justify-center items-start overflow-hidden gap-6">
+      <div className="">
         <AnimatedColumn
           covers={column1Games}
           animationClass="animate-scroll-up-slow"
         />
       </div>
 
-      <div className="w-52">
+      <div className="">
         <AnimatedColumn
           covers={column2Games}
           animationClass="animate-scroll-down-medium"
         />
       </div>
 
-      <div className="w-52">
+      <div className="">
         <AnimatedColumn
           covers={column3Games}
           animationClass="animate-scroll-up-slow"
