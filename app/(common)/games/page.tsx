@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { GameCardProps } from "@/utils/types";
 
-export const AllGames = () => {
+const AllGames = () => {
   const [games, setGames] = useState<GameCardProps[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(false);
 
@@ -33,7 +33,11 @@ export const AllGames = () => {
   };
 
   return (
-    <Games games={games} handlePagination={handlePagination} displayMore={hasMore} />
+    <Games
+      games={games}
+      handlePagination={handlePagination}
+      displayMore={hasMore}
+    />
   );
 };
 
