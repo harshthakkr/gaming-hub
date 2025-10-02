@@ -23,9 +23,7 @@ const AllGames = () => {
   }, []);
 
   const handlePagination = async () => {
-    const res = await axios.get(
-      `http://localhost:3000/api/games?offset=${games.length}`
-    );
+    const res = await axios.get(`/api/games?offset=${games.length}`);
     if (setGames) {
       setGames([...games, ...res.data]);
       setHasMore(res.data.length === 40);
