@@ -19,7 +19,7 @@ export default function Layout({
             !isOpen && "hidden"
           }`}
         >
-          <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+          <Sidebar />
         </div>
         <div className="flex-1 lg:ml-0">{children}</div>
       </div>

@@ -1,16 +1,9 @@
 "use client";
 
-import { X } from "lucide-react";
 import { Topic } from "./Topic";
 import { ThemeAndSignOut } from "./ThemeAndSignOut";
 
-export const Sidebar = ({
-  isOpen,
-  setIsOpen,
-}: {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-}) => {
+export const Sidebar = () => {
   return (
     <div className="h-full min-w-32 mx-5 lg:mx-0 flex flex-col">
       <div className="flex-1">
