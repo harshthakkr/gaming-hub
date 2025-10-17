@@ -6,7 +6,7 @@ export const GET = async (request: NextRequest) => {
     const search = request.nextUrl.searchParams.get("q") || "";
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/games`,
-      `fields name,slug,cover.url; search "${search}";`,
+      `fields name,slug,cover.url; search "${search}"; limit 40;`,
       {
         headers: {
           "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,

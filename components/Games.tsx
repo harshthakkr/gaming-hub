@@ -16,7 +16,7 @@ export const Games = ({
   }
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 xl:max-w-[95%] gap-4 lg:gap-6">
         {games.map((game) => (
           <GameCard
             key={game.id}
