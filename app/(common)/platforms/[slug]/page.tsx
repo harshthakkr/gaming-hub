@@ -2,43 +2,26 @@
 
 import { Games } from "@/components/Games";
 import { Heading } from "@/components/Heading";
+import { Loader } from "@/components/Loader";
+import { useData } from "@/utils/hooks/useData";
 import { GameCardProps } from "@/utils/types";
-import axios from "axios";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const Platform = () => {
-  const params = useParams();
-  const slug = params.slug;
-  const [games, setGames] = useState<GameCardProps[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(false);
+  const { slug } = useParams();
+  const { data, hasMore, loading, handlePagination } = useData<GameCardProps>(
+    `platforms/${slug}`,
+    40
+  );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get(`/api/platforms/${slug}`);
-      setGames(res.data);
-      setHasMore(res.data.length === 40);
-    };
-
-    if (slug) {
-      fetchData();
-    }
-  }, [slug]);
-
-  const handlePagination = async () => {
-    const res = await axios.get(
-      `/api/platforms/${slug}?offset=${games.length}`
-    );
-    setGames([...games, ...res.data]);
-    setHasMore(res.data.length === 40);
-  };
-
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div>
       <Heading title={slug} />
-      {games && (
+      {data && (
         <Games
-          games={games}
+          games={data}
           handlePagination={handlePagination}
           displayMore={hasMore}
         />

@@ -2,35 +2,23 @@
 
 import { EventCard } from "@/components/EventCard";
 import { Heading } from "@/components/Heading";
+import { Loader } from "@/components/Loader";
 import { LoadMoreButton } from "@/components/LoadMoreButton";
+import { useData } from "@/utils/hooks/useData";
 import { EventCardProps } from "@/utils/types";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
 const Events = () => {
-  const [events, setEvents] = useState<EventCardProps[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(false);
+  const { data, hasMore, loading, handlePagination } =
+    useData<EventCardProps>("events");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get(`/api/events`);
-      setEvents(res.data);
-      setHasMore(res.data.length === 20);
-    };
-    fetchData();
-  }, []);
-
-  const handlePagination = async () => {
-    const res = await axios.get(`/api/events?offset=${events.length}`);
-    setEvents([...events, ...res.data]);
-    setHasMore(res.data.length === 20);
-  };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div>
       <Heading title="Events" />
       <div className="flex flex-col justify-center items-center">
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
-          {events.map((event) => {
+          {data.map((event) => {
             return (
               <EventCard
                 key={event.id}

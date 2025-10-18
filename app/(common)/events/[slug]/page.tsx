@@ -2,44 +2,32 @@
 
 import { Games } from "@/components/Games";
 import { Heading } from "@/components/Heading";
+import { Loader } from "@/components/Loader";
 import { SecondaryHeading } from "@/components/SecondaryHeading";
+import { useSingleData } from "@/utils/hooks/useSingleData";
 import { EventPageProps } from "@/utils/types";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const Event = () => {
-  const [event, setEvent] = useState<EventPageProps>({});
-  const params = useParams();
-  const slug = params.slug;
-
-  useEffect(() => {
-    const fetchDate = async () => {
-      const res = await axios.get(`/api/events/${slug}`);
-      setEvent(res.data);
-    };
-    fetchDate();
-  }, []);
+  const { data, loading } = useSingleData<EventPageProps>("events");
 
   const formatDate = (timestamp: number | undefined) => {
     if (!timestamp) return "TBD";
     return new Date(timestamp * 1000).toUTCString();
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div>
-      <Heading title={event.name} />
-      {event.event_logo && (
+      <Heading title={data.name} />
+      {data.event_logo && (
         <div className="flex items-start">
           <div className="flex flex-col xl:flex-row justify-between items-start mb-6 gap-6">
             <Image
-              src={`https:${event.event_logo.url.replace(
-                "t_thumb",
-                "t_1080p"
-              )}`}
-              alt={`${event.name || "Event"} logo`}
+              src={`https:${data.event_logo.url.replace("t_thumb", "t_1080p")}`}
+              alt={`${data.name || "Event"} logo`}
               width={400}
               height={200}
               className="rounded-lg object-contain"
@@ -47,14 +35,14 @@ const Event = () => {
             />
             <div className="space-y-4">
               <p className="text-gray-400">
-                Start: {formatDate(event.start_time)}
+                Start: {formatDate(data.start_time)}
               </p>
-              <p className="text-gray-400">End: {formatDate(event.end_time)}</p>
+              <p className="text-gray-400">End: {formatDate(data.end_time)}</p>
 
-              {event.live_stream_url && (
+              {data.live_stream_url && (
                 <div>
                   <Link
-                    href={event.live_stream_url}
+                    href={data.live_stream_url}
                     target="_blank"
                     className="text-blue-400 hover:underline"
                   >
@@ -63,18 +51,18 @@ const Event = () => {
                 </div>
               )}
 
-              {event.description && (
-                <p className="text-gray-300">{event.description}</p>
+              {data.description && (
+                <p className="text-gray-300">{data.description}</p>
               )}
             </div>
           </div>
         </div>
       )}
 
-      {event.games && (
+      {data.games && (
         <div>
           <SecondaryHeading title="Featured Games" />
-          <Games games={event.games} />
+          <Games games={data.games} />
         </div>
       )}
     </div>

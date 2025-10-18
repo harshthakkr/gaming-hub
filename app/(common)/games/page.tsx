@@ -1,38 +1,21 @@
 "use client";
 
 import { Games } from "@/components/Games";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { GameCardProps } from "@/utils/types";
+import { Loader } from "@/components/Loader";
+import { useData } from "@/utils/hooks/useData";
 
 const AllGames = () => {
-  const [games, setGames] = useState<GameCardProps[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(false);
+  const { data, hasMore, loading, handlePagination } = useData<GameCardProps>(
+    "games",
+    40
+  );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("/api/games");
-        setGames(res.data);
-        setHasMore(res.data.length === 40);
-      } catch (error) {
-        console.error("Error fetching games:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const handlePagination = async () => {
-    const res = await axios.get(`/api/games?offset=${games.length}`);
-    if (setGames) {
-      setGames([...games, ...res.data]);
-      setHasMore(res.data.length === 40);
-    }
-  };
-
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Games
-      games={games}
+      games={data}
       handlePagination={handlePagination}
       displayMore={hasMore}
     />

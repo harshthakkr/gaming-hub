@@ -2,34 +2,23 @@
 
 import { Games } from "@/components/Games";
 import { Heading } from "@/components/Heading";
+import { Loader } from "@/components/Loader";
+import { useData } from "@/utils/hooks/useData";
 import { GameCardProps } from "@/utils/types";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
 const UpcomingGames = () => {
-  const [games, setGames] = useState<GameCardProps[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(false);
+  const { data, hasMore, loading, handlePagination } = useData<GameCardProps>(
+    "upcoming-games",
+    40
+  );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get(`/api/upcoming-games`);
-      setGames(res.data);
-      setHasMore(res.data.length === 40);
-    };
-    fetchData();
-  }, []);
-
-  const handlePagination = async () => {
-    const res = await axios.get(`/api/upcoming-games?offset=${games.length}`);
-    setGames([...games, ...res.data]);
-    setHasMore(res.data.length === 40);
-  };
-
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div>
       <Heading title="Upcoming Games" />
       <Games
-        games={games}
+        games={data}
         handlePagination={handlePagination}
         displayMore={hasMore}
       />

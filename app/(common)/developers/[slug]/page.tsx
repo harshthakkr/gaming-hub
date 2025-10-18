@@ -2,29 +2,22 @@
 
 import { Games } from "@/components/Games";
 import { Heading } from "@/components/Heading";
+import { Loader } from "@/components/Loader";
 import { SecondaryHeading } from "@/components/SecondaryHeading";
+import { useSingleData } from "@/utils/hooks/useSingleData";
 import { DeveloperPageProps } from "@/utils/types";
-import axios from "axios";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const Developer = () => {
-  const [developer, setDeveloper] = useState<DeveloperPageProps>({});
-  const params = useParams();
-  const slug = params.slug;
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get(`/api/developers/${slug}`);
-      setDeveloper(res.data);
-    };
-    fetchData();
-  }, []);
-  return (
+  const { data, loading } = useSingleData<DeveloperPageProps>("developers");
+
+  return loading ? (
+    <Loader />
+  ) : (
     <div>
-      <Heading title={developer.name} />
+      <Heading title={data.name} />
       <div className="font-supreme text-neutral-400 mb-2">
-        {developer.websites?.map((website) => {
+        {data.websites?.map((website) => {
           return (
             <Link
               href={website.url}
@@ -37,11 +30,11 @@ const Developer = () => {
           );
         })}
       </div>
-      <p className="font-supreme text-neutral-400">{developer.description}</p>
-      {developer.developed && (
+      <p className="font-supreme text-neutral-400">{data.description}</p>
+      {data.developed && (
         <div>
           <SecondaryHeading title="Developed Games" />
-          <Games games={developer.developed} />
+          <Games games={data.developed} />
         </div>
       )}
     </div>

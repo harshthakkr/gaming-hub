@@ -1,26 +1,20 @@
 "use client";
 
-import axios from "axios";
 import { CardProps } from "@/utils/types";
-import { useEffect, useState } from "react";
 import { Heading } from "@/components/Heading";
 import { Card } from "@/components/Card";
+import { Loader } from "@/components/Loader";
+import { useData } from "@/utils/hooks/useData";
 
 const Platforms = () => {
-  const [genres, setGenres] = useState<CardProps[]>([]);
+  const { data, loading } = useData<CardProps>("genres");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get("/api/genres");
-      setGenres(res.data);
-    };
-    fetchData();
-  }, []);
-
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div>
       <Heading title="Genres" />
-      <Card items={genres} route="genres" />
+      <Card items={data} route="genres" />
     </div>
   );
 };
