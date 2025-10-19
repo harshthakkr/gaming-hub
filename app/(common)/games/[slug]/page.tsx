@@ -9,6 +9,7 @@ import { Games } from "@/components/Games";
 import { GameDataRow } from "@/components/GameDataRow";
 import { GameMultiDataRow } from "@/components/GameMultiDataRow";
 import { SecondaryHeading } from "@/components/SecondaryHeading";
+import { ChevronButton } from "@/components/ChevronButton";
 
 const Game = () => {
   const { data, loading } = useSingleData<GamePageProps>(`games`);
@@ -45,53 +46,16 @@ const Game = () => {
             />
             {images.length > 1 && (
               <>
-                <button
-                  onClick={() =>
-                    setCurrentIndex(
-                      (i) => (i - 1 + images.length) % images.length
-                    )
-                  }
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </button>
-
-                <button
-                  onClick={() =>
-                    setCurrentIndex((i) => (i + 1) % images.length)
-                  }
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-
-                <div className="absolute top-4 right-4 bg-black/80 text-white text-sm px-3 py-1 rounded-full">
-                  {currentIndex + 1} / {images.length}
-                </div>
+                <ChevronButton
+                  images={images}
+                  direction="left"
+                  setCurrentIndex={setCurrentIndex}
+                />
+                <ChevronButton
+                  images={images}
+                  direction="right"
+                  setCurrentIndex={setCurrentIndex}
+                />
               </>
             )}
           </div>

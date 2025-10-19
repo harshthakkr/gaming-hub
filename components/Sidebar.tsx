@@ -14,6 +14,7 @@ export const Sidebar = () => {
         <Topic title="Platforms" path="/platforms" />
         <Topic title="Genres" path="/genres" />
         <Topic title="Developers" path="/developers" />
+        <Topic title="Chat with AI" path="/ai" />
       </div>
       <div className="block lg:hidden px-3 mb-4">
         <ThemeAndSignOut />

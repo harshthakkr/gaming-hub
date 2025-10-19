@@ -5,7 +5,7 @@ export const GET = async (request: NextRequest) => {
   const offset = request.nextUrl.searchParams?.get("offset");
   const platformRes = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_URL}/platforms`,
-    `fields name,slug; sort generation desc; limit 20; offset ${offset || 0};`,
+    `fields name,slug; sort generation desc; limit 40; offset ${offset || 0};`,
     {
       headers: {
         "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,

@@ -8,8 +8,10 @@ import { Loader } from "@/components/Loader";
 import { useData } from "@/utils/hooks/useData";
 
 const Platforms = () => {
-  const { data, hasMore, loading, handlePagination } =
-    useData<CardProps>("platforms");
+  const { data, hasMore, loading, handlePagination } = useData<CardProps>(
+    "platforms",
+    40
+  );
 
   return loading ? (
     <Loader />

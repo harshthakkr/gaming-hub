@@ -13,6 +13,7 @@
   --breakpoint-md: 586px;
   --breakpoint-lg: 800px;
   --breakpoint-xl: 1080px;
+  --breakpoint-2xl: 1352px;
 }
 
 @keyframes scroll-up-infinite {
