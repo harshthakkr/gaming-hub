@@ -14,7 +14,7 @@ export const Card = ({
         return (
           <h4
             key={item.id}
-            className="p-4 text-xl lg:text-2xl col-span-1 bg-neutral-800 rounded-2xl hover:scale-105 duration-200"
+            className="p-4 text-xl lg:text-2xl col-span-1 dark:bg-neutral-800 bg-neutral-900/10 rounded-2xl hover:scale-105 duration-200"
           >
             <Link href={`/${route}/${item.slug}`}>{item.name}</Link>
           </h4>

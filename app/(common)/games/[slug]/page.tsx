@@ -59,7 +59,7 @@ const Game = () => {
               </>
             )}
           </div>
-          <div className="font-supreme bg-gray-900/50 border border-gray-700 rounded-2xl p-6 space-y-6">
+          <div className="font-supreme dark:bg-gray-900/50 bg-gray-900/10 border dark:border-gray-700 border-gray-300 rounded-2xl p-6 space-y-6">
             <GameDataRow
               title="Release Date"
               data={data.release_dates ? data.release_dates[0].human : "N/A"}
@@ -67,7 +67,7 @@ const Game = () => {
             <GameMultiDataRow
               title="Platforms"
               data={data.platforms}
-              colors="bg-primary/30 text-neutral-200"
+              colors="dark:bg-primary/30 bg-primary/60 text-neutral-200"
             />
             <GameDataRow
               title="Critics Score"
@@ -80,20 +80,22 @@ const Game = () => {
             <GameMultiDataRow
               title="Genres"
               data={data.genres}
-              colors="bg-secondary/20 text-secondary "
+              colors="dark:bg-secondary/20 bg-secondary/80 dark:text-secondary text-white"
             />
             <GameMultiDataRow
               title="Developers"
               data={developerData}
-              colors="bg-gray-800 text-gray-200 "
+              colors="dark:bg-gray-800 bg-gray-700 text-gray-200 "
             />
           </div>
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold mb-2 text-white">About</h3>
+          <h3 className="text-xl font-semibold mb-2 dark:text-white text-black">
+            About
+          </h3>
           {data.summary && (
-            <p className="font-supreme text-neutral-400 leading-relaxed">
+            <p className="font-supreme dark:text-neutral-400 text-neutral-600 leading-relaxed">
               {data.summary}
             </p>
           )}

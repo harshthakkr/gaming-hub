@@ -11,9 +11,11 @@ export const GameMultiDataRow = ({
     <div
       className={`${
         title === "Developers" ? "" : "border-b pb-4"
-      } border-gray-700`}
+      } dark:border-gray-700 border-gray-400`}
     >
-      <span className="text-gray-400 block mb-3">{title}</span>
+      <span className="dark:text-gray-400 text-gray-700 block mb-3">
+        {title}
+      </span>
       <div className="flex flex-wrap gap-2">
         {data ? (
           data.map((item, index) => (

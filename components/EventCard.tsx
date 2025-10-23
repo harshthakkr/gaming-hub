@@ -1,13 +1,12 @@
 "use client";
 
-import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { EventCardProps } from "@/utils/types";
 
 export const EventCard = ({ name, slug, event_logo }: EventCardProps) => {
   return event_logo ? (
-    <div className="relative rounded-xl bg-neutral-300 dark:bg-neutral-800 hover:scale-104 duration-200 ease-in-out">
+    <div className="rounded-xl bg-gray-900/10 dark:bg-neutral-800 hover:scale-104 duration-200 ease-in-out">
       <div className="flex justify-center items-center">
         {event_logo && (
           <Image
@@ -29,7 +28,6 @@ export const EventCard = ({ name, slug, event_logo }: EventCardProps) => {
             {name}
           </Link>
         </p>
-        <Heart className="absolute bottom-4 right-4 cursor-pointer" />
       </div>
     </div>
   ) : (

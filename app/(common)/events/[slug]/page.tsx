@@ -34,17 +34,19 @@ const Event = () => {
               priority
             />
             <div className="space-y-4">
-              <p className="text-gray-400">
+              <p className="dark:text-gray-400 text-gray-700">
                 Start: {formatDate(data.start_time)}
               </p>
-              <p className="text-gray-400">End: {formatDate(data.end_time)}</p>
+              <p className="dark:text-gray-400 text-gray-700">
+                End: {formatDate(data.end_time)}
+              </p>
 
               {data.live_stream_url && (
                 <div>
                   <Link
                     href={data.live_stream_url}
                     target="_blank"
-                    className="text-blue-400 hover:underline"
+                    className="dark:text-blue-400 text-blue-600 hover:underline"
                   >
                     Watch Live →
                   </Link>
@@ -52,7 +54,9 @@ const Event = () => {
               )}
 
               {data.description && (
-                <p className="text-gray-300">{data.description}</p>
+                <p className="dark:text-gray-300 text-gray-800">
+                  {data.description}
+                </p>
               )}
             </div>
           </div>

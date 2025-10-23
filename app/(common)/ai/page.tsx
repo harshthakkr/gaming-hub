@@ -47,7 +47,7 @@ const AI = () => {
   };
 
   return (
-    <div className="font-supreme h-[calc(100vh-73px-2rem)] flex flex-col bg-neutral-900 rounded-lg min-w-screen lg:min-w-xl mx-auto">
+    <div className="font-supreme h-[calc(100vh-73px-2rem)] flex flex-col dark:bg-neutral-900 bg-neutral-900/10 rounded-lg min-w-screen lg:min-w-xl mx-auto">
       <div className="flex-1 overflow-y-auto">
         <div className="p-4 space-y-4 min-h-full flex flex-col">
           {messages.length === 0 ? (
@@ -105,7 +105,7 @@ const AI = () => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            className="w-full bg-neutral-800 text-white border border-neutral-700 p-4 pr-14 rounded-xl focus:outline-none"
+            className="w-full dark:bg-neutral-800 text-white border border-neutral-700 p-4 pr-14 rounded-xl focus:outline-none"
             disabled={loading}
           />
           <button

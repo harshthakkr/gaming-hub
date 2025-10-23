@@ -31,7 +31,7 @@ export const GamesList = ({
   }, [query]);
 
   return (
-    <div className="z-50 absolute top-12 left-0 w-full bg-neutral-900 p-4 rounded-lg">
+    <div className="z-100 absolute top-12 left-0 w-full dark:bg-neutral-900 bg-neutral-100 p-4 rounded-lg">
       {loading ? (
         <Loader />
       ) : (
@@ -41,7 +41,7 @@ export const GamesList = ({
             .map((game) => (
               <li
                 key={game.id}
-                className="flex items-center gap-4 hover:bg-neutral-800 hover:rounded-lg duration-200"
+                className="flex items-center gap-4 hover:dark:bg-neutral-800 hover:bg-neutral-200 hover:rounded-lg duration-200"
               >
                 {game.cover && (
                   <Image
