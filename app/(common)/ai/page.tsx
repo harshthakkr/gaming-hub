@@ -47,11 +47,11 @@ const AI = () => {
   };
 
   return (
-    <div className="font-supreme h-[calc(100vh-73px-2rem)] flex flex-col dark:bg-neutral-900 bg-neutral-900/10 rounded-lg min-w-screen lg:min-w-xl mx-auto">
+    <div className="font-supreme h-[calc(100vh-73px-2rem)] flex flex-col bg-white dark:bg-neutral-900 rounded-lg min-w-screen lg:min-w-xl mx-auto">
       <div className="flex-1 overflow-y-auto">
         <div className="p-4 space-y-4 min-h-full flex flex-col">
           {messages.length === 0 ? (
-            <div className="flex items-center justify-center flex-1 text-neutral-500">
+            <div className="flex items-center justify-center flex-1 text-neutral-500 dark:text-neutral-500">
               Ask me anything about games!
             </div>
           ) : (
@@ -60,7 +60,7 @@ const AI = () => {
                 key={idx}
                 className={`${
                   msg.role === "user"
-                    ? "ml-auto bg-accent/80 rounded-full rounded-br-none w-fit"
+                    ? "ml-auto bg-accent dark:bg-accent/80 rounded-full rounded-br-none w-fit"
                     : "mr-auto"
                 } p-4 max-w-3xl`}
               >
@@ -68,17 +68,17 @@ const AI = () => {
                   <p className="text-white">{msg.content}</p>
                 ) : (
                   <div
-                    className="text-white prose prose-invert max-w-none
+                    className="text-neutral-800 dark:text-white prose dark:prose-invert max-w-none
                     [&>*]:mb-4 [&>*:last-child]:mb-0
-                    [&_h1]:text-xl [&_h1]:font-bold [&_h1:first-child]:mt-0
+                    [&_h1]:text-xl [&_h1]:font-bold [&_h1]:first-child:mt-0
                     [&_h2]:text-lg [&_h2]:font-semibold
                     [&_ul]:list-disc [&_ul]:pl-6
                     [&_ol]:list-decimal [&_ol]:pl-6
-                    [&_code]:bg-neutral-950 [&_code]:text-blue-400 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded
-                    [&_pre]:bg-neutral-950 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto
+                    [&_code]:bg-neutral-100 dark:[&_code]:bg-neutral-950 [&_code]:text-blue-600 dark:[&_code]:text-blue-400 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded
+                    [&_pre]:bg-neutral-100 dark:[&_pre]:bg-neutral-950 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto
                     [&_pre_code]:bg-transparent [&_pre_code]:p-0
-                    [&_a]:text-blue-400 [&_a]:underline
-                    [&_blockquote]:border-l-4 [&_blockquote]:border-neutral-600 [&_blockquote]:pl-4 [&_blockquote]:italic"
+                    [&_a]:text-blue-600 dark:[&_a]:text-blue-400 [&_a]:underline
+                    [&_blockquote]:border-l-4 [&_blockquote]:border-neutral-300 dark:[&_blockquote]:border-neutral-600 [&_blockquote]:pl-4 [&_blockquote]:italic"
                   >
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {msg.content}
@@ -91,13 +91,15 @@ const AI = () => {
           {loading && (
             <div className="p-4 flex items-center gap-2">
               <Spinner />
-              <p className="text-neutral-400">Thinking...</p>
+              <p className="text-neutral-500 dark:text-neutral-400">
+                Thinking...
+              </p>
             </div>
           )}
           <div ref={messagesEndRef} />
         </div>
       </div>
-      <div className="p-4 border-t border-neutral-700">
+      <div className="p-4 border-t border-neutral-200 dark:border-neutral-700">
         <div className="max-w-3xl mx-auto relative">
           <input
             type="text"
@@ -105,7 +107,7 @@ const AI = () => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            className="w-full dark:bg-neutral-800 text-white border border-neutral-700 p-4 pr-14 rounded-xl focus:outline-none"
+            className="w-full bg-white dark:bg-neutral-800 text-black dark:text-white border border-neutral-300 dark:border-neutral-700 p-4 pr-14 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent"
             disabled={loading}
           />
           <button
