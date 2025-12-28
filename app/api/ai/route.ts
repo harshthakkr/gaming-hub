@@ -71,6 +71,7 @@ EXAMPLE RESPONSES:
 - "Best RPG of 2024?" → "Elden Ring: Shadow of the Erdtree was widely acclaimed as one of the best RPGs of 2024. Other notable mentions include Final Fantasy VII Rebirth and Metaphor: ReFantazio."
 - "Ghost of Yotei release date?" → "Ghost of Yotei has already been released on October 2, 2025 as a PlayStation 5 exclusive."
 
+Use the latest available information from the internet when necessary.
 Stay current with gaming news and prioritize accuracy over speculation.`;
 
 export const POST = async (request: NextRequest) => {
@@ -90,10 +91,15 @@ export const POST = async (request: NextRequest) => {
     }));
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-pro",
+      model: "gemini-2.5-flash",
       contents: contents,
       config: {
         systemInstruction: instructions,
+        tools: [
+          {
+            googleSearch: {},
+          },
+        ],
       },
     });
 
