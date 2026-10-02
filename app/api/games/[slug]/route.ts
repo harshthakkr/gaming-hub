@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getIgdbHeaders } from "@/lib/igdb";
 import { NextRequest, NextResponse } from "next/server";
 
 // IGDB's external_games.external_game_source enum: 1 identifies a Steam
@@ -37,10 +38,7 @@ export const GET = async (
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) => {
-  const headers = {
-    "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,
-    Authorization: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
-  };
+  const headers = await getIgdbHeaders();
   const { slug } = await params;
 
   const gameRes = await axios.post(

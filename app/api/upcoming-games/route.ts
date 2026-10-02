@@ -1,5 +1,6 @@
 import { GameCardProps } from "@/utils/types";
 import axios from "axios";
+import { getIgdbHeaders } from "@/lib/igdb";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request: NextRequest) => {
@@ -12,10 +13,7 @@ export const GET = async (request: NextRequest) => {
       offset || 0
     };`,
     {
-      headers: {
-        "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,
-        Authorization: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
-      },
+      headers: await getIgdbHeaders(),
     }
   );
   const games: GameCardProps[] = res.data;

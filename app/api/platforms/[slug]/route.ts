@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getIgdbHeaders } from "@/lib/igdb";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
@@ -13,10 +14,7 @@ export const GET = async (
       offset || 0
     };`,
     {
-      headers: {
-        "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,
-        Authorization: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
-      },
+      headers: await getIgdbHeaders(),
     }
   );
   return NextResponse.json(platformRes.data);

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getIgdbHeaders } from "@/lib/igdb";
 import { NextRequest, NextResponse } from "next/server";
 import { GameCardProps } from "@/utils/types";
 
@@ -10,10 +11,7 @@ export const GET = async (request: NextRequest) => {
   const ids = request.nextUrl.searchParams.get("ids");
   const sort = request.nextUrl.searchParams.get("sort") || "rating";
 
-  const headers = {
-    "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,
-    Authorization: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
-  };
+  const headers = await getIgdbHeaders();
 
   try {
     if (ids) {
