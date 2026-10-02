@@ -1,31 +1,27 @@
 "use client";
 
-import { Games } from "@/components/Games";
-import { Heading } from "@/components/Heading";
-import { Loader } from "@/components/Loader";
+import { useParams } from "next/navigation";
 import { useData } from "@/utils/hooks/useData";
 import { GameCardProps } from "@/utils/types";
-import { useParams } from "next/navigation";
+import { GameCatalogue } from "@/components/overdrive/GameCatalogue";
 
-const Genre = () => {
+export default function Genre() {
   const { slug } = useParams();
-  const { data, hasMore, loading, handlePagination } = useData<GameCardProps>(
-    `genres/${slug}`,
+  const slugStr = String(slug || "");
+  const { data, hasMore, loading, loadingMore, handlePagination } = useData<GameCardProps>(
+    `genres/${slugStr}`,
     40
   );
 
-  return loading ? (
-    <Loader />
-  ) : (
-    <div>
-      <Heading title={slug} />
-      <Games
-        games={data}
-        handlePagination={handlePagination}
-        displayMore={hasMore}
-      />
-    </div>
+  return (
+    <GameCatalogue
+      title={slugStr.replace(/-/g, " ").toUpperCase()}
+      subtitle="genre catalogue"
+      games={data}
+      loading={loading}
+      hasMore={hasMore}
+      loadingMore={loadingMore}
+      onLoadMore={handlePagination}
+    />
   );
-};
-
-export default Genre;
+}

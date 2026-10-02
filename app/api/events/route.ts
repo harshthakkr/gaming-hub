@@ -5,7 +5,7 @@ export const GET = async (request: NextRequest) => {
   const offset = request.nextUrl.searchParams?.get("offset");
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_URL}/events`,
-    `fields name,slug,event_logo.url; sort start_time desc; limit 20; offset ${
+    `fields name,slug,event_logo.url,description,start_time,end_time; sort start_time desc; limit 20; offset ${
       offset || 0
     };`,
     {
@@ -15,6 +15,5 @@ export const GET = async (request: NextRequest) => {
       },
     }
   );
-  const events = res.data;
-  return NextResponse.json(events);
+  return NextResponse.json(res.data);
 };

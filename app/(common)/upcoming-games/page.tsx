@@ -1,29 +1,24 @@
 "use client";
 
-import { Games } from "@/components/Games";
-import { Heading } from "@/components/Heading";
-import { Loader } from "@/components/Loader";
 import { useData } from "@/utils/hooks/useData";
 import { GameCardProps } from "@/utils/types";
+import { GameCatalogue } from "@/components/overdrive/GameCatalogue";
 
-const UpcomingGames = () => {
-  const { data, hasMore, loading, handlePagination } = useData<GameCardProps>(
+export default function UpcomingGames() {
+  const { data, hasMore, loading, loadingMore, handlePagination } = useData<GameCardProps>(
     "upcoming-games",
     40
   );
 
-  return loading ? (
-    <Loader />
-  ) : (
-    <div>
-      <Heading title="Upcoming Games" />
-      <Games
-        games={data}
-        handlePagination={handlePagination}
-        displayMore={hasMore}
-      />
-    </div>
+  return (
+    <GameCatalogue
+      title="UPCOMING"
+      subtitle="on the horizon"
+      games={data}
+      loading={loading}
+      hasMore={hasMore}
+      loadingMore={loadingMore}
+      onLoadMore={handlePagination}
+    />
   );
-};
-
-export default UpcomingGames;
+}

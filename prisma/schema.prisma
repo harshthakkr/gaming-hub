@@ -9,19 +9,43 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(cuid())
-  createdAt       DateTime  @default(now())
+  id              String          @id @default(cuid())
+  createdAt       DateTime        @default(now())
   name            String?
-  email           String    @unique
+  username        String?         @unique
+  email           String          @unique
   emailVerified   DateTime?
+  passwordHash    String?
   image           String?
   wishlistedGames Game[]
   post            Post[]
   comment         Comment[]
   accounts        Account[]
   sessions        Session[]
+  reviews         Review[]
+  reviewLikes     ReviewLike[]
+  reviewComments  ReviewComment[]
+  commentLikes    CommentLike[]
+  chatMessages    ChatMessage[]
 
   @@map("users")
+}
+
+enum ChatRole {
+  USER
+  ASSISTANT
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  role      ChatRole
+  content   String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@index([userId, createdAt])
 }
 
 model Game {
@@ -86,4 +110,85 @@ model Comment {
   authorId  String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
+}
+
+/// Player verdict tiers. Ordered worst -> best; the UI renders them in this
+/// order and picks the modal tier as the game's consensus.
+enum Verdict {
+  SKIP
+  TIMEPASS
+  WORTH_IT
+  GO_FOR_IT
+  MASTERPIECE
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  /// IGDB game id — games are not mirrored locally, so this is a loose ref.
+  gameId      Int
+  gameSlug    String
+  gameName    String
+  body        String
+  wordCount   Int
+  verdict     Verdict
+  hasSpoilers Boolean  @default(false)
+
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+
+  likes    ReviewLike[]
+  comments ReviewComment[]
+
+  @@unique([authorId, gameId])
+  @@index([gameId, createdAt])
+  @@index([gameId, hasSpoilers])
+}
+
+model ReviewLike {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reviewId String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+
+  @@unique([reviewId, userId])
+  @@index([userId])
+}
+
+model ReviewComment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  body      String
+
+  review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reviewId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+
+  /// Replies are capped at one level: a comment with a parent cannot be replied to.
+  parent   ReviewComment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId String?
+  replies  ReviewComment[] @relation("CommentReplies")
+
+  likes CommentLike[]
+
+  @@index([reviewId, createdAt])
+  @@index([parentId])
+}
+
+model CommentLike {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  comment   ReviewComment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  @@unique([commentId, userId])
+  @@index([userId])
 }

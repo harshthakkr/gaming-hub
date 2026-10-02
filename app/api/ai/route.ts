@@ -1,6 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
 
 dotenv.config({ path: ".env.local" });
 
@@ -27,19 +29,21 @@ CORE KNOWLEDGE AREAS:
 - Game pricing, sales, and regional variations
 
 RESPONSE GUIDELINES:
-1. Be CONCISE but INFORMATIVE - Provide direct answers with essential details
+1. Be BRIEF above all else - Default to the shortest response that fully answers the question. Cut filler, throat-clearing, and restating the question.
 2. Be ACCURATE - Verify dates, names, and facts; admit uncertainty when unsure
 3. Be UP-TO-DATE - Prioritize the latest information and current gaming news
-4. Be SPECIFIC - Include exact release dates, version numbers, and platform details when relevant
-5. Be STRUCTURED - Use bullet points or short paragraphs for clarity
-6. Be HELPFUL - Anticipate follow-up questions and provide context
+4. Be SPECIFIC - Include exact release dates, version numbers, and platform details only when relevant, without padding the sentence around them
+5. Be STRUCTURED - Prefer short bullet points over paragraphs whenever listing more than one thing
+6. Be HELPFUL - Anticipate follow-up questions, but don't answer them preemptively — let the user ask
 
 RESPONSE FORMAT:
-- For simple questions: 1-3 sentences with the direct answer
-- For complex topics: Brief introduction + key points + relevant context
-- For comparisons: Structured list highlighting differences and similarities
-- For recommendations: Top options with brief reasoning
-- For technical queries: Specific requirements or specifications
+- For simple questions: 1 sentence, sometimes 2 if truly needed. Never more.
+- For lists/recommendations: a short list of names only, each with at most a 3-5 word qualifier (not a full sentence) — e.g. "Clair Obscur: Expedition 33 — critics' pick" not a full explanation of why
+- Cap lists at 5 items unless the user asks for more
+- For complex topics: 1 short lead-in line + bullet points, no extra wrap-up paragraph
+- For comparisons: a short list highlighting only the key differences, not every similarity
+- For technical queries: just the requirements/specs, no surrounding narration
+- Never pad a response to sound more thorough — shorter and correct beats longer and complete
 
 TONE & STYLE:
 - Professional yet conversational
@@ -67,15 +71,20 @@ HANDLE VARIED USER INPUTS:
 - Provide objective data for factual questions (sales, ratings, specs)
 
 EXAMPLE RESPONSES:
-- "When is GTA 6 coming out?" → "Grand Theft Auto VI is scheduled to release on May 26, 2026 for PlayStation 5 and Xbox Series X/S, with a PC release expected later."
-- "Best RPG of 2024?" → "Elden Ring: Shadow of the Erdtree was widely acclaimed as one of the best RPGs of 2024. Other notable mentions include Final Fantasy VII Rebirth and Metaphor: ReFantazio."
-- "Ghost of Yotei release date?" → "Ghost of Yotei has already been released on October 2, 2025 as a PlayStation 5 exclusive."
+- "When is GTA 6 coming out?" → "May 26, 2026, on PS5 and Xbox Series X/S. PC release expected later."
+- "Best RPG of 2024?" → "Elden Ring: Shadow of the Erdtree — also worth a look: Final Fantasy VII Rebirth, Metaphor: ReFantazio."
+- "Ghost of Yotei release date?" → "Already out — October 2, 2025, PS5 exclusive."
 
 Use the latest available information from the internet when necessary.
 Stay current with gaming news and prioritize accuracy over speculation.`;
 
 export const POST = async (request: NextRequest) => {
   try {
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+    }
+
     const { messages } = await request.json();
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
@@ -90,7 +99,18 @@ export const POST = async (request: NextRequest) => {
       parts: [{ text: msg.content }],
     }));
 
-    const response = await ai.models.generateContent({
+    const latestUserMessage = messages[messages.length - 1];
+    if (latestUserMessage?.role === "user" && latestUserMessage.content?.trim()) {
+      await prisma.chatMessage.create({
+        data: {
+          userId: session.user.id,
+          role: "USER",
+          content: latestUserMessage.content,
+        },
+      });
+    }
+
+    const response = await ai.models.generateContentStream({
       model: "gemini-2.5-flash",
       contents: contents,
       config: {
@@ -103,7 +123,39 @@ export const POST = async (request: NextRequest) => {
       },
     });
 
-    return NextResponse.json({ response: response.text });
+    const encoder = new TextEncoder();
+    let fullReply = "";
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const chunk of response) {
+            if (chunk.text) {
+              fullReply += chunk.text;
+              controller.enqueue(encoder.encode(chunk.text));
+            }
+          }
+          controller.close();
+          if (fullReply.trim()) {
+            await prisma.chatMessage.create({
+              data: {
+                userId: session.user.id,
+                role: "ASSISTANT",
+                content: fullReply,
+              },
+            });
+          }
+        } catch (error) {
+          controller.error(error);
+        }
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache, no-transform",
+      },
+    });
   } catch (error) {
     console.error("AI API Error:", error);
     return NextResponse.json(

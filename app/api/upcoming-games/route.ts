@@ -6,9 +6,9 @@ export const GET = async (request: NextRequest) => {
   const offset = request.nextUrl.searchParams?.get("offset");
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_URL}/games`,
-    `fields name,slug,cover.url,first_release_date,release_dates.human; where first_release_date >= ${Math.floor(
+    `fields id,name,slug,cover.url,aggregated_rating,first_release_date,genres.name,hypes,involved_companies.developer,involved_companies.publisher,involved_companies.company.name; where first_release_date >= ${Math.floor(
       Date.now() / 1000
-    )} | first_release_date = null; sort first_release_date asc; limit 40; offset ${
+    )} & cover != null; sort first_release_date asc; limit 40; offset ${
       offset || 0
     };`,
     {

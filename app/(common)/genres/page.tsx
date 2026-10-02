@@ -1,22 +1,45 @@
 "use client";
 
-import { CardProps } from "@/utils/types";
-import { Heading } from "@/components/Heading";
-import { Card } from "@/components/Card";
-import { Loader } from "@/components/Loader";
+import Link from "next/link";
 import { useData } from "@/utils/hooks/useData";
+import { CardProps } from "@/utils/types";
+import { PageContainer, PageTitle } from "@/components/overdrive/PageShell";
+import { NoResults } from "@/components/overdrive/EmptyState";
+import { GenresSkeleton } from "@/components/overdrive/Skeletons";
+import { genreGradient } from "@/utils/overdrive";
 
-const Platforms = () => {
-  const { data, loading } = useData<CardProps>("genres");
+export default function Genres() {
+  const { data, loading } = useData<CardProps>("genres", 40);
 
-  return loading ? (
-    <Loader />
-  ) : (
-    <div>
-      <Heading title="Genres" />
-      <Card items={data} route="genres" />
-    </div>
+  if (loading) return <GenresSkeleton />;
+
+  return (
+    <PageContainer>
+      <PageTitle title="GENRES" subtitle="browse by category" />
+      {data.length === 0 ? (
+        <NoResults description="No genres found right now. Check back later." />
+      ) : (
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4">
+          {data.map((g) => (
+            <Link
+              key={g.id}
+              href={`/genres/${g.slug}`}
+              className={`group relative overflow-hidden border border-ov-border bg-gradient-to-br p-[22px_18px] transition-all duration-200 hover:-translate-y-1 hover:border-ov-teal active:scale-[0.98] ${genreGradient(g.name)}`}
+            >
+              <div className="absolute inset-0 bg-[rgba(5,8,16,0.72)] transition-opacity duration-200 group-hover:bg-[rgba(5,8,16,0.55)]" />
+              <div className="relative">
+                <div className="font-orbitron text-[18px] font-bold text-white">
+                  {g.name}
+                </div>
+                <div className="mt-2 flex items-center gap-1 text-[11px] tracking-wide text-ov-teal">
+                  BROWSE GAMES
+                  <span className="transition-transform duration-200 group-hover:translate-x-1">▸</span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+    </PageContainer>
   );
-};
-
-export default Platforms;
+}

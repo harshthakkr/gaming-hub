@@ -6,7 +6,7 @@ export const GET = async (request: NextRequest) => {
     const search = request.nextUrl.searchParams.get("q") || "";
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/games`,
-      `fields name,slug,cover.url; search "${search}"; limit 40;`,
+      `fields id,name,slug,cover.url,aggregated_rating,first_release_date,genres.name,hypes,involved_companies.developer,involved_companies.publisher,involved_companies.company.name; search "${search}"; limit 40;`,
       {
         headers: {
           "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,
@@ -14,8 +14,7 @@ export const GET = async (request: NextRequest) => {
         },
       }
     );
-    const games = res.data;
-    return NextResponse.json(games);
+    return NextResponse.json(res.data);
   } catch (error) {
     console.error("Search error:", error);
     return NextResponse.json(

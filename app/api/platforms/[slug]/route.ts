@@ -9,7 +9,7 @@ export const GET = async (
   const offset = request.nextUrl.searchParams?.get("offset");
   const platformRes = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_URL}/games`,
-    `fields name,slug,cover.url,platforms.name; where platforms.slug = "${slug}"; limit 40; offset ${
+    `fields id,name,slug,cover.url,aggregated_rating,first_release_date,genres.name,hypes,involved_companies.developer,involved_companies.publisher,involved_companies.company.name; where platforms.slug = "${slug}" & cover != null; sort aggregated_rating desc; limit 40; offset ${
       offset || 0
     };`,
     {
@@ -19,6 +19,5 @@ export const GET = async (
       },
     }
   );
-  const res = platformRes.data;
-  return NextResponse.json(res);
+  return NextResponse.json(platformRes.data);
 };

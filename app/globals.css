@@ -1,43 +1,245 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-@theme {
-  --color-primary: #321cbb;
-  --color-secondary: #8787fe;
-  --color-accent: #544aff;
-  --color-accent-light: #bdc7ff;
-  --color-light: #d5d9ff;
-  --font-clash: "Clash Display", sans-serif;
-  --font-supreme: "Supreme", sans-serif;
+@theme inline {
+  --color-ov-bg: #05070e;
+  --color-ov-panel: #0a1220;
+  --color-ov-border: #16324a;
+  --color-ov-teal: #2dd4bf;
+  --color-ov-teal-dark: #14b8a6;
+  --color-ov-rose: #f43f5e;
+  --color-ov-text: #c3cede;
+  --color-ov-muted: #5b6b82;
+  --color-ov-dim: #7c8aa0;
+  --color-ov-white: #e6edf6;
+  --font-orbitron: var(--font-orbitron-next), sans-serif;
+  --font-chakra: var(--font-chakra-next), sans-serif;
   --breakpoint-md: 586px;
   --breakpoint-lg: 800px;
   --breakpoint-xl: 1080px;
   --breakpoint-2xl: 1352px;
 }
 
-@keyframes scroll-up-infinite {
-  0% {
+/* Tailwind v4 puts utility classes inside a cascade layer; unlayered CSS
+   always wins over layered styles regardless of specificity. These resets
+   must live in @layer base so a Tailwind text-color class on an <a> (or any
+   element below) can still override them normally. */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: #05070e;
+    color: #c3cede;
+    font-family: var(--font-chakra), sans-serif;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  input {
+    font-family: inherit;
+  }
+
+  ::selection {
+    background: #2dd4bf;
+    color: #05070e;
+  }
+}
+
+@keyframes ov-scrollup {
+  from {
     transform: translateY(0);
   }
-  100% {
+  to {
     transform: translateY(-50%);
   }
 }
 
-@keyframes scroll-down-infinite {
-  0% {
+@keyframes ov-scrolldown {
+  from {
     transform: translateY(-50%);
   }
-  100% {
+  to {
     transform: translateY(0);
   }
 }
 
-.animate-scroll-up-slow {
-  animation: scroll-up-infinite 25s linear infinite;
+@keyframes ov-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
-.animate-scroll-down-medium {
-  animation: scroll-down-infinite 20s linear infinite;
+@keyframes ov-think {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ov-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes ov-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-ov-scrollup {
+  animation: ov-scrollup 26s linear infinite;
+}
+
+.animate-ov-scrolldown {
+  animation: ov-scrolldown 30s linear infinite;
+}
+
+.animate-ov-scrollup-slow {
+  animation: ov-scrollup 34s linear infinite;
+}
+
+.animate-ov-pulse {
+  animation: ov-pulse 2s infinite;
+}
+
+.animate-ov-think {
+  animation: ov-think 0.8s linear infinite;
+}
+
+.animate-ov-pop {
+  animation: ov-pop 0.14s ease-out;
+}
+
+.animate-ov-fade-up {
+  animation: ov-fade-up 0.25s ease-out both;
+}
+
+.ov-grid-bg {
+  min-height: 100vh;
+  background-color: #05070e;
+  background-image:
+    linear-gradient(rgba(45, 212, 191, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 212, 191, 0.035) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+
+.ov-clip-sm {
+  clip-path: polygon(
+    8px 0,
+    100% 0,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    0 100%,
+    0 8px
+  );
+}
+
+.ov-clip-md {
+  clip-path: polygon(
+    10px 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%,
+    0 10px
+  );
+}
+
+.ov-clip-card {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%
+  );
+}
+
+.ov-clip-row {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%
+  );
+}
+
+.ov-clip-hero {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 26px),
+    calc(100% - 26px) 100%,
+    0 100%
+  );
+}
+
+.ov-clip-panel {
+  clip-path: polygon(16px 0, 100% 0, 100% 100%, 0 100%, 0 16px);
+}
+
+.ov-clip-chat {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    0 100%
+  );
+}
+
+.ov-clip-input {
+  clip-path: polygon(
+    12px 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0 100%,
+    0 12px
+  );
+}
+
+.ov-bubble-user {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    10px 100%,
+    0 calc(100% - 10px)
+  );
+}
+
+.ov-bubble-ai {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%
+  );
 }

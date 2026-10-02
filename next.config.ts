@@ -12,6 +12,13 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/igdb/image/upload/**",
       },
+      {
+        // Google account profile photos.
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -1,29 +1,24 @@
 "use client";
 
-import { Games } from "@/components/Games";
-import { Heading } from "@/components/Heading";
-import { Loader } from "@/components/Loader";
 import { useData } from "@/utils/hooks/useData";
 import { GameCardProps } from "@/utils/types";
+import { GameCatalogue } from "@/components/overdrive/GameCatalogue";
 
-const Year2025 = () => {
-  const { data, hasMore, loading, handlePagination } = useData<GameCardProps>(
+export default function Year2025() {
+  const { data, hasMore, loading, loadingMore, handlePagination } = useData<GameCardProps>(
     "2025",
     40
   );
 
-  return loading ? (
-    <Loader />
-  ) : (
-    <div>
-      <Heading title="2025" />
-      <Games
-        games={data}
-        handlePagination={handlePagination}
-        displayMore={hasMore}
-      />
-    </div>
+  return (
+    <GameCatalogue
+      title="2025"
+      subtitle="this year's releases"
+      games={data}
+      loading={loading}
+      hasMore={hasMore}
+      loadingMore={loadingMore}
+      onLoadMore={handlePagination}
+    />
   );
-};
-
-export default Year2025;
+}
