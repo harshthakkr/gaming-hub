@@ -9,24 +9,24 @@ datasource db {
 }
 
 model User {
-  id              String          @id @default(cuid())
-  createdAt       DateTime        @default(now())
-  name            String?
-  username        String?         @unique
-  email           String          @unique
-  emailVerified   DateTime?
-  passwordHash    String?
-  image           String?
-  wishlistedGames Game[]
-  post            Post[]
-  comment         Comment[]
-  accounts        Account[]
-  sessions        Session[]
-  reviews         Review[]
-  reviewLikes     ReviewLike[]
-  reviewComments  ReviewComment[]
-  commentLikes    CommentLike[]
-  chatMessages    ChatMessage[]
+  id             String           @id @default(cuid())
+  createdAt      DateTime         @default(now())
+  name           String?
+  username       String?          @unique
+  email          String           @unique
+  emailVerified  DateTime?
+  passwordHash   String?
+  image          String?
+  post           Post[]
+  comment        Comment[]
+  accounts       Account[]
+  sessions       Session[]
+  reviews        Review[]
+  reviewLikes    ReviewLike[]
+  reviewComments ReviewComment[]
+  commentLikes   CommentLike[]
+  chatMessages   ChatMessage[]
+  collection     CollectionItem[]
 
   @@map("users")
 }
@@ -46,15 +46,6 @@ model ChatMessage {
   userId String
 
   @@index([userId, createdAt])
-}
-
-model Game {
-  id       Int     @id
-  name     String
-  slug     String
-  coverUrl String
-  User     User?   @relation(fields: [userId], references: [id])
-  userId   String?
 }
 
 model Account {
@@ -191,4 +182,23 @@ model CommentLike {
 
   @@unique([commentId, userId])
   @@index([userId])
+}
+
+enum CollectionKind {
+  WISHLIST
+  LIBRARY
+}
+
+/// A game a user has wishlisted or added to their library.
+model CollectionItem {
+  id        String         @id @default(cuid())
+  createdAt DateTime       @default(now())
+  kind      CollectionKind
+  /// IGDB game id — games are not mirrored locally, so this is a loose ref.
+  gameId    Int
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@unique([userId, kind, gameId])
 }

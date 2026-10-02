@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useCollection } from "@/context/CollectionContext";
+import { loginHref, useCollection } from "@/context/CollectionContext";
 import { GameCardProps } from "@/utils/types";
 import { PageContainer, PageTitle } from "@/components/overdrive/PageShell";
 import { EmptyState } from "@/components/overdrive/EmptyState";
@@ -13,7 +13,7 @@ import { OvIcon } from "@/components/overdrive/OvIcon";
 import { coverUrl } from "@/utils/overdrive";
 
 export default function WishlistPage() {
-  const { wishlist, toggleWish, ready } = useCollection();
+  const { wishlist, toggleWish, ready, signedIn } = useCollection();
   const [games, setGames] = useState<GameCardProps[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -31,6 +31,20 @@ export default function WishlistPage() {
       .finally(() => setLoading(false));
   }, [wishlist, ready]);
 
+  if (ready && !signedIn) {
+    return (
+      <PageContainer>
+        <PageTitle title="WISH" accent="LIST" accentClassName="text-ov-rose" />
+        <EmptyState
+          icon="heart-filled"
+          title="LOG IN TO SEE YOUR WISHLIST"
+          description="Your wishlist is saved to your account, so it follows you across devices."
+          actionLabel="LOG IN"
+          actionHref={loginHref("/wishlist")}
+        />
+      </PageContainer>
+    );
+  }
   if (!ready || loading) return <WishlistSkeleton />;
 
   return (

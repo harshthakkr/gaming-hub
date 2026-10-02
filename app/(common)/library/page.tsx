@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useCollection } from "@/context/CollectionContext";
+import { loginHref, useCollection } from "@/context/CollectionContext";
 import { GameCardProps } from "@/utils/types";
 import { PageContainer, PageTitle } from "@/components/overdrive/PageShell";
 import { EmptyState } from "@/components/overdrive/EmptyState";
@@ -12,7 +12,7 @@ import { LibrarySkeleton } from "@/components/overdrive/Skeletons";
 import { coverUrl, developerName } from "@/utils/overdrive";
 
 export default function LibraryPage() {
-  const { library, toggleLibrary, ready } = useCollection();
+  const { library, toggleLibrary, ready, signedIn } = useCollection();
   const [games, setGames] = useState<GameCardProps[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,6 +30,21 @@ export default function LibraryPage() {
       .finally(() => setLoading(false));
   }, [library, ready]);
 
+  if (ready && !signedIn) {
+    return (
+      <PageContainer>
+        <PageTitle title="LIBRARY" />
+        <EmptyState
+          icon="library"
+          iconClassName="text-[#2dd4bf]"
+          title="LOG IN TO SEE YOUR LIBRARY"
+          description="Your library is saved to your account, so it follows you across devices."
+          actionLabel="LOG IN"
+          actionHref={loginHref("/library")}
+        />
+      </PageContainer>
+    );
+  }
   if (!ready || loading) return <LibrarySkeleton />;
 
   return (
